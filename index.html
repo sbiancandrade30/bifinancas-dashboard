@@ -2,968 +2,477 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#0d1720"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="BiFinanças"/>
 <title>BiFinanças</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#1a8a3c;--green-dk:#136030;--green-lt:#e8f5ed;
-  --bg:#f4f6f8;--border:#e8edf2;--text:#1a2332;--muted:#64748b;--light:#94a3b8;
-  --red:#ef4444;--red-lt:#fef2f2;--amber:#f59e0b;--amber-lt:#fffbeb;--blue:#3b82f6;
-  --white:#fff;--shadow:0 1px 4px rgba(0,0,0,.08);--shadow-md:0 4px 12px rgba(0,0,0,.1);
-  --r:12px;--rsm:8px;--rlg:16px;
+  --bg:#f3f5f7;--panel:#fff;--panel2:#f8fafc;--line:#e7ebf0;--line2:#dbe2ea;
+  --text:#0f172a;--muted:#64748b;--soft:#94a3b8;--dark:#0d1720;--dark2:#14212c;
+  --green:#22c55e;--green2:#16a34a;--green-soft:#eafaf1;--red:#ef4444;--red-soft:#fff1f2;
+  --blue:#2563eb;--blue-soft:#eff6ff;--purple:#7c3aed;--purple-soft:#f3e8ff;--amber:#f59e0b;--amber-soft:#fff7ed;
+  --radius:18px;--radius2:14px;--shadow:0 14px 38px rgba(15,23,42,.07);--shadow2:0 6px 18px rgba(15,23,42,.055);
 }
-html,body{height:100%;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);font-size:14px}
-#root{min-height:100vh}
+html,body{min-height:100%;background:var(--bg);font-family:Manrope,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);font-size:14px;-webkit-font-smoothing:antialiased}body{overflow-x:hidden}button,input,select{font-family:inherit}button{border:0;background:none;cursor:pointer}#root{min-height:100vh}
+::-webkit-scrollbar{width:7px;height:7px}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:99px}
+.login-wrap{min-height:100vh;display:grid;place-items:center;background:radial-gradient(circle at top left,#1f3b2d,#0d1720 55%)}.login-box{width:min(92vw,390px);background:white;border-radius:26px;padding:34px;box-shadow:0 24px 70px rgba(0,0,0,.24)}.login-logo{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:26px}.login-ic{width:44px;height:44px;background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:14px;display:grid;place-items:center;color:white;font-weight:800;font-size:20px}.login-nm{font-size:22px;font-weight:800}.l-lbl{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}.l-inp{width:100%;height:46px;border:1px solid var(--line2);border-radius:12px;padding:0 13px;outline:none;font-size:15px}.l-inp:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.12)}.l-btn{width:100%;height:46px;margin-top:14px;border-radius:12px;background:var(--green);color:white;font-weight:800;font-size:14px}.l-err{margin-top:12px;color:var(--red);font-size:12px;text-align:center}
+.app{min-height:100vh}.sidebar{position:fixed;inset:0 auto 0 0;width:236px;background:linear-gradient(180deg,#0b151d,#101c25);color:white;padding:22px 16px;display:flex;flex-direction:column;z-index:30}.brand{display:flex;align-items:center;gap:10px;margin:0 6px 28px}.brand-mark{font-size:25px;line-height:1}.brand-text{font-size:19px;font-weight:800;letter-spacing:-.03em}.nav{display:flex;flex-direction:column;gap:7px;flex:1;overflow:auto;padding-right:2px}.nav-item{min-height:46px;border-radius:12px;display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.76);padding:0 14px;font-weight:750;font-size:14px;text-align:left}.nav-item:hover{background:rgba(255,255,255,.06);color:white}.nav-item.on{background:rgba(255,255,255,.095);color:#5bf28f}.nav-icon{width:20px;text-align:center;font-size:17px}.side-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.05);border-radius:16px;padding:16px;margin-top:14px}.side-label{font-size:12px;color:rgba(255,255,255,.66);margin-bottom:8px}.side-value{font-weight:800;font-size:18px;color:#39e479;letter-spacing:-.02em}.logout{height:46px;border-radius:12px;background:rgba(255,255,255,.07);color:white;font-weight:750;text-align:left;padding:0 14px;margin-top:14px}.main{margin-left:236px;min-width:0}.page{max-width:1500px;margin:0 auto;padding:30px 34px 42px}.mobile-top,.bottom-nav{display:none}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:22px}.title{font-size:30px;font-weight:850;letter-spacing:-.05em;line-height:1}.subtitle{margin-top:6px;color:var(--muted);font-size:14px}.top-actions{display:flex;align-items:center;gap:14px}.month-pill{height:44px;min-width:150px;border:1px solid var(--line);border-radius:12px;background:white;box-shadow:var(--shadow2);display:flex;align-items:center;justify-content:center;gap:18px;font-weight:800}.icon-btn{width:42px;height:42px;border-radius:50%;background:white;border:1px solid var(--line);display:grid;place-items:center;box-shadow:var(--shadow2)}.user-pill{height:42px;display:flex;align-items:center;gap:8px;font-weight:750}.avatar{width:32px;height:32px;border-radius:50%;background:#14532d;color:white;display:grid;place-items:center;font-weight:850}.tabs{height:48px;display:flex;gap:28px;align-items:end;border-bottom:1px solid var(--line);margin-bottom:22px;overflow-x:auto}.tab{height:48px;white-space:nowrap;color:#475569;font-weight:750;position:relative}.tab.on{color:var(--green2)}.tab.on:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;border-radius:99px;background:var(--green)}
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:14px;margin-bottom:18px}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow2)}.kpi{padding:18px 18px 16px;min-height:126px;position:relative;overflow:hidden}.kpi-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}.kpi-label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:850;color:#334155}.mini-ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:14px}.kpi-value{font-weight:850;font-size:24px;letter-spacing:.01em;margin-bottom:18px;white-space:nowrap}.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;border-top:1px solid var(--line);padding-top:11px}.kpi-sm-label{font-size:11px;color:var(--muted);margin-bottom:3px}.kpi-sm-value{font-weight:850;font-size:12px}.progress{height:8px;border-radius:99px;background:#e9eef4;overflow:hidden}.progress>span{display:block;height:100%;border-radius:inherit;background:var(--green);width:0}.kpi-note{display:flex;justify-content:space-between;gap:8px;margin-top:10px;color:var(--muted);font-size:12px}.green{color:var(--green2)}.red{color:var(--red)}.blue{color:var(--blue)}.purple{color:var(--purple)}
+.grid-main{display:grid;grid-template-columns:1.05fr .95fr .95fr;gap:16px;margin-bottom:16px}.grid-bottom{display:grid;grid-template-columns:1fr 1fr;gap:16px}.section-card{padding:20px}.card-title{font-size:17px;font-weight:850;letter-spacing:-.03em;display:flex;justify-content:space-between;align-items:center;margin-bottom:17px;gap:12px}.select-chip{min-height:32px;border:1px solid var(--line);border-radius:9px;background:white;padding:0 12px;color:#334155;font-size:12px;font-weight:750;white-space:nowrap}.chart-wrap{height:230px;position:relative;display:grid;place-items:center}.donut{width:205px;height:205px;border-radius:50%;background:conic-gradient(var(--green) 0 35%,var(--blue) 35% 54%,#fbbf24 54% 71%,#8b5cf6 71% 83%,#ef4444 83% 92%,#cbd5e1 92%);display:grid;place-items:center}.donut:before{content:"";width:132px;height:132px;border-radius:50%;background:#fff;position:absolute}.chart-center{position:absolute;text-align:center;pointer-events:none}.chart-center strong{display:block;font-weight:850;font-size:18px}.chart-center span{font-size:12px;color:var(--muted)}.legend{display:grid;gap:12px;margin-top:6px}.legend-row{display:grid;grid-template-columns:12px 1fr auto auto;gap:10px;align-items:center;font-size:13px}.dot{width:9px;height:9px;border-radius:50%}.muted{color:var(--muted)}.saldo-chart{height:252px}.line-demo{height:220px;border-left:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;margin:18px 8px 4px;background:linear-gradient(180deg,rgba(34,197,94,.08),transparent)}.line-demo svg{position:absolute;inset:0;width:100%;height:100%}.budget-list{display:grid;gap:15px}.budget-row{display:grid;grid-template-columns:38px 1fr auto;gap:12px;align-items:center}.sq{width:34px;height:34px;border-radius:11px;background:var(--green-soft);display:grid;place-items:center}.budget-name{font-weight:850;margin-bottom:6px}.budget-bar{height:7px;background:#edf2f7;border-radius:99px;overflow:hidden}.budget-bar span{display:block;height:100%;background:var(--green);border-radius:99px}.budget-money{font-size:12px;color:var(--muted);text-align:right}.transactions{display:grid;gap:0}.tx-row{display:grid;grid-template-columns:42px 1fr auto auto;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.tx-row:last-child{border-bottom:0}.tx-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#eef2ff}.tx-name{font-weight:850}.tx-cat{font-size:12px;color:var(--muted);margin-top:2px}.tx-date{color:var(--muted);font-size:12px}.tx-value{font-weight:850}.budget-summary{display:grid;grid-template-columns:220px 1fr;gap:22px;align-items:center}.big-ring{width:174px;height:174px;border-radius:50%;background:conic-gradient(var(--green) 0 73%,#eef2f7 73%);display:grid;place-items:center;margin:auto}.big-ring-inner{width:132px;height:132px;border-radius:50%;background:white;display:grid;place-items:center;text-align:center}.big-ring strong{font-size:32px;font-weight:850}.summary-lines{display:grid;gap:18px}.summary-line{display:flex;justify-content:space-between;gap:15px;border-bottom:1px solid var(--line);padding-bottom:12px}.tip{background:linear-gradient(90deg,#eefbf3,#f7fffb);border:1px solid #cef7dd;border-radius:14px;padding:13px 15px;color:#14532d;font-weight:750;font-size:13px;margin-top:12px}.table-wrap{overflow-x:auto}.table{width:100%;border-collapse:collapse;min-width:740px}.table th{text-align:left;font-size:12px;color:var(--muted);font-weight:850;border-bottom:1px solid var(--line);padding:12px 10px}.table td{padding:14px 10px;border-bottom:1px solid var(--line);font-size:13px}.table tr:last-child td{border-bottom:0}.status{padding:5px 10px;border-radius:99px;background:#dcfce7;color:#166534;font-weight:850;font-size:11px;display:inline-block}.ellipsis{font-size:22px;color:var(--muted)}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.click-card{transition:.15s}.click-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}.click-card.on{outline:2px solid var(--green)}.segmented{display:inline-flex;background:#eef2f7;border-radius:12px;padding:4px;gap:4px}.segmented button{height:34px;padding:0 14px;border-radius:9px;font-weight:800;color:#475569}.segmented button.on{background:#fff;color:var(--green2);box-shadow:var(--shadow2)}.settings-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.settings-card{padding:20px}.settings-icon{width:42px;height:42px;border-radius:14px;background:var(--green-soft);display:grid;place-items:center;font-size:20px;margin-bottom:12px}.settings-title{font-weight:850;font-size:15px;margin-bottom:5px}.settings-desc{color:var(--muted);font-size:12px;line-height:1.45;margin-bottom:14px}.soft-btn{height:36px;padding:0 12px;border-radius:10px;background:#f1f5f9;color:#334155;font-weight:800}.card-split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.account-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.account-card{padding:18px}.account-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}.account-logo{width:44px;height:44px;border-radius:16px;display:grid;place-items:center;color:#fff;font-size:20px;font-weight:850}.account-name{font-weight:850;font-size:15px}.account-type{font-size:12px;color:var(--muted);margin-top:2px}.account-balance{font-size:23px;font-weight:850;margin:10px 0;color:var(--text)}.account-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.tiny-btn{height:32px;padding:0 10px;border-radius:9px;background:#f1f5f9;color:#334155;font-size:11px;font-weight:850}.pay-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.pay-card{padding:16px;text-align:center}.pay-emoji{width:42px;height:42px;border-radius:16px;background:#f1f5f9;display:grid;place-items:center;margin:0 auto 10px;font-size:20px}.pay-name{font-weight:850;font-size:13px}.pay-type{font-size:11px;color:var(--muted);margin-top:3px}.notice-list{display:grid;gap:10px}.notice-row{display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:15px;background:#fff}.notice-ic{width:38px;height:38px;border-radius:13px;background:var(--green-soft);display:grid;place-items:center}.notice-title{font-weight:850}.notice-desc{font-size:12px;color:var(--muted);margin-top:2px}.toggle{width:48px;height:28px;border-radius:99px;background:#dbe2ea;position:relative}.toggle:after{content:'';position:absolute;width:22px;height:22px;left:3px;top:3px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(15,23,42,.18)}.toggle.on{background:var(--green)}.toggle.on:after{left:23px}.settings-section{margin-bottom:18px}.section-subtitle{font-size:13px;color:var(--muted);margin:-6px 0 14px}.
+@media(max-width:1220px){.kpis{grid-template-columns:repeat(3,1fr)}.grid-main,.grid-bottom{grid-template-columns:1fr}.settings-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:880px){.sidebar{display:none}.main{margin-left:0}.mobile-top{display:block;position:sticky;top:0;z-index:25;background:#fff;border-bottom:1px solid var(--line);padding:12px 16px calc(10px + env(safe-area-inset-top))}.mobile-row{display:flex;align-items:center;justify-content:space-between}.mobile-brand{font-weight:850;display:flex;align-items:center;gap:8px}.page{padding:18px 14px 92px}.top{display:none}.tabs{gap:20px;margin-bottom:16px;padding:0 2px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.kpi{min-height:112px;padding:14px}.kpi-value{font-size:20px;white-space:normal}.kpi-grid{display:none}.grid-main,.grid-bottom{grid-template-columns:1fr;gap:12px}.section-card{padding:16px}.card-title{font-size:15px}.chart-wrap{height:190px}.donut{width:170px;height:170px}.donut:before{width:108px;height:108px}.budget-row{grid-template-columns:34px 1fr}.budget-money{grid-column:2;text-align:left}.tx-row{grid-template-columns:38px 1fr auto;gap:9px}.tx-date{display:none}.tx-value{font-size:13px}.budget-summary{grid-template-columns:1fr}.big-ring{width:150px;height:150px}.big-ring-inner{width:112px;height:112px}.mini-grid,.settings-grid,.card-split,.account-grid,.pay-grid{grid-template-columns:1fr}.bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);z-index:40;padding:7px 4px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -12px 30px rgba(15,23,42,.08)}.bn-item{height:48px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#64748b;font-size:11px;font-weight:800}.bn-item.on{color:var(--green2)}.bn-icon{font-size:18px}.bn-plus{width:48px;height:48px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:24px;margin:-18px auto 0}.side-card,.logout{display:none}}
+@media(max-width:430px){.kpis{grid-template-columns:1fr 1fr}.kpi-label{font-size:11px}.kpi-value{font-size:18px}.tabs{gap:16px}.tab{font-size:13px}.legend-row{grid-template-columns:10px 1fr auto}.card-title .select-chip{display:none}}
 
-/* ════════════════════════════════════════
-   LOGIN (compartilhado desktop+mobile)
-════════════════════════════════════════ */
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--green-dk)}
-.login-box{background:var(--white);border-radius:20px;padding:40px 32px;width:360px;box-shadow:var(--shadow-md)}
-.login-logo{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:28px}
-.login-ic{width:42px;height:42px;background:var(--green);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.login-nm{font-size:20px;font-weight:700;color:var(--green)}
-.l-lbl{font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em}
-.l-inp{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:var(--rsm);font-size:14px;outline:none;transition:border .15s;margin-bottom:14px;font-family:inherit;color:var(--text)}
-.l-inp:focus{border-color:var(--green)}
-.l-btn{width:100%;padding:13px;background:var(--green);color:var(--white);border:none;border-radius:var(--rsm);font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
-.l-btn:hover{background:var(--green-dk)}
-.l-err{color:var(--red);font-size:12px;margin-top:8px;text-align:center}
+/* Ajustes Bi: wishlist estilo Notion, dívidas e notificações em configurações */
+.wish-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}.wish-title{font-size:28px;font-weight:850;letter-spacing:-.04em}.wish-tabs{display:flex;align-items:center;gap:8px;overflow:auto;padding-bottom:2px}.wish-tab{display:inline-flex;align-items:center;gap:7px;padding:9px 12px;border-radius:999px;background:#eef2f6;color:#475569;font-size:13px;font-weight:800;white-space:nowrap}.wish-tab.on{background:#e8f7ef;color:#0f7a39}.wish-actions{display:flex;align-items:center;gap:8px}.wish-action{height:36px;padding:0 12px;border-radius:10px;background:#f8fafc;border:1px solid var(--line);font-size:12px;font-weight:800;color:#475569}.wish-action.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.wish-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}.wish-card{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow2);overflow:hidden;min-height:260px;display:flex;flex-direction:column}.wish-cover{height:105px;background:linear-gradient(135deg,#f1f5f9,#e2e8f0);display:grid;place-items:center;font-size:38px;position:relative;overflow:hidden}.wish-cover img{width:100%;height:100%;object-fit:cover}.wish-body{padding:12px 13px;display:flex;flex-direction:column;gap:8px;flex:1}.wish-name{font-size:14px;font-weight:850;line-height:1.35}.wish-price{font-size:13px;font-weight:800;color:#0f172a}.wish-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:7px;font-size:11px;font-weight:750;line-height:1.2}.tag-pink{background:#fce7f3;color:#9d174d}.tag-blue{background:#dbeafe;color:#1d4ed8}.tag-gold{background:#fef3c7;color:#92400e}.tag-green{background:#dcfce7;color:#166534}.tag-gray{background:#f1f5f9;color:#475569}.wish-link{font-size:11px;color:#334155;text-decoration:underline;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.wish-foot{margin-top:auto;font-size:11px;color:var(--muted)}.tab-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:rgba(15,23,42,.08);font-size:11px}.wish-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:18px 0 14px}.wish-section-head h2{font-size:20px;font-weight:850;letter-spacing:-.03em}.wish-section-head p{font-size:12px;color:var(--muted);margin-top:3px}.wish-placeholder{display:grid;place-items:center;gap:5px;color:#475569}.wish-placeholder span{font-size:38px}.wish-placeholder small{font-size:11px;font-weight:800;color:var(--muted)}.wish-edit-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:auto;padding-top:4px}.wish-edit-row button{height:30px;border-radius:8px;background:#f8fafc;border:1px solid var(--line);font-size:11px;font-weight:800;color:#475569}.wish-edit-row button:hover{border-color:var(--green);color:var(--green2)}.tag-red{background:#fee2e2;color:#991b1b}.debt-hero{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-bottom:16px}.debt-main{padding:22px}.debt-main-title{font-size:15px;font-weight:850;margin-bottom:10px}.debt-value{font-size:34px;font-weight:850;color:var(--blue);letter-spacing:-.04em}.debt-subgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.debt-sub{background:var(--panel2);border-radius:12px;padding:10px}.debt-sub span{display:block;font-size:11px;color:var(--muted);font-weight:750;margin-bottom:3px}.debt-sub b{font-size:14px}.debt-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:12px}.debt-breakdown-col{display:grid;gap:12px;align-self:start}.debt-person{padding:16px}.debt-person h3{font-size:14px;margin-bottom:8px}.debt-list{display:grid;gap:10px}.loan-card{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 14px}.loan-name{font-weight:850}.loan-note{font-size:12px;color:var(--muted);margin-top:3px}.config-notice{grid-column:1/-1}.notice-panel{margin-top:12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.notice-mini{border:1px solid var(--line);border-radius:13px;background:#fff;padding:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.notice-mini-title{font-weight:850;font-size:13px}.notice-mini-desc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.35}
+@media(max-width:760px){.wish-title{font-size:22px}.wish-board{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.wish-card{min-height:270px}.wish-cover{height:92px}.wish-body{padding:10px}.wish-name{font-size:13px}.wish-section-head{align-items:flex-start;flex-direction:column}.wish-edit-row{grid-template-columns:1fr}.debt-hero,.debt-breakdown{grid-template-columns:1fr}.debt-subgrid{grid-template-columns:1fr 1fr}.notice-panel{grid-template-columns:1fr}}
 
-/* ════════════════════════════════════════
-   DESKTOP LAYOUT
-════════════════════════════════════════ */
-.d-layout{display:flex;min-height:100vh;background:var(--bg)}
 
-/* Sidebar */
-.d-sidebar{width:220px;background:var(--green-dk);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100}
-.d-sidebar-logo{padding:20px 18px 16px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:9px}
-.d-logo-ic{width:34px;height:34px;background:rgba(255,255,255,.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.d-logo-txt{font-size:15px;font-weight:700;color:var(--white)}
-.d-nav{padding:10px 0;flex:1}
-.d-nav-item{display:flex;align-items:center;gap:9px;padding:10px 18px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);cursor:pointer;transition:all .15s;border-left:3px solid transparent;margin:1px 0}
-.d-nav-item:hover{background:rgba(255,255,255,.08);color:var(--white)}
-.d-nav-item.on{background:rgba(255,255,255,.13);color:var(--white);border-left-color:var(--white)}
-.d-nav-ic{font-size:16px;width:18px;text-align:center;flex-shrink:0}
-.d-sidebar-ft{padding:14px 18px;border-top:1px solid rgba(255,255,255,.1)}
-.d-logout{width:100%;padding:9px;background:rgba(255,255,255,.08);border:none;border-radius:var(--rsm);color:rgba(255,255,255,.65);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .15s}
-.d-logout:hover{background:rgba(255,255,255,.15);color:var(--white)}
+/* Ajustes Bi - cards mais minimalistas e páginas sem tela branca */
+.wish-card{position:relative}.wish-edit-mini{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:10px;background:rgba(255,255,255,.92);border:1px solid var(--line);box-shadow:var(--shadow2);display:grid;place-items:center;font-size:13px;color:#475569}.wish-edit-mini:hover{color:var(--green2);border-color:#bbf7d0}.wish-body{gap:7px}.wish-meta .tag-gray.priority-tag{display:none}.wish-edit-row{display:none!important}.wish-link{font-size:11px}.wish-cover{height:112px}.debt-actions{display:flex;gap:8px;flex-wrap:wrap}.icon-only{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:#475569}.account-grid,.pay-grid,.settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}.account-card,.pay-card,.settings-card{padding:16px}.account-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}.account-logo{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:white;font-weight:850;text-transform:uppercase}.account-name,.pay-name,.settings-title{font-weight:850}.account-type,.pay-type,.settings-desc,.section-subtitle{font-size:12px;color:var(--muted);line-height:1.35}.account-balance{font-size:22px;font-weight:850;margin:12px 0;color:var(--text)}.status{display:inline-flex;padding:4px 9px;border-radius:999px;background:#dcfce7;color:#166534;font-size:11px;font-weight:750}.account-actions{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}.tiny-btn,.soft-btn{height:32px;border-radius:9px;border:1px solid var(--line);background:#fff;padding:0 10px;font-size:12px;font-weight:750;color:#475569}.pay-emoji,.settings-icon{font-size:24px;margin-bottom:10px}.notice-panel{margin-top:12px}.toggle{width:38px;height:22px;border-radius:999px;background:#cbd5e1;position:relative;flex-shrink:0}.toggle:after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:white;border-radius:50%;transition:.2s}.toggle.on{background:var(--green)}.toggle.on:after{left:19px}.notice-mini{min-height:76px}.edit-modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.38);z-index:80;display:grid;place-items:center;padding:18px}.edit-modal{width:min(520px,94vw);background:white;border-radius:20px;border:1px solid var(--line);box-shadow:0 24px 80px rgba(0,0,0,.25);padding:20px}.edit-modal h3{font-size:18px;margin-bottom:12px}.edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.edit-field{display:grid;gap:5px}.edit-field label{font-size:11px;font-weight:850;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.edit-field input,.edit-field select,.edit-field textarea{height:38px;border:1px solid var(--line);border-radius:10px;padding:0 10px;background:#f8fafc}.edit-field textarea{height:76px;padding-top:9px;resize:vertical}.edit-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.debt-help{font-size:12px;color:var(--muted);margin-top:8px}.loan-card .icon-only{margin-left:8px}
+@media(max-width:760px){.edit-grid{grid-template-columns:1fr}.wish-board{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.wish-cover{height:92px}.wish-title{font-size:22px}.wish-toolbar{align-items:flex-start}.wish-actions{width:100%;justify-content:flex-end}.debt-hero,.debt-breakdown{grid-template-columns:1fr}.account-grid,.pay-grid,.settings-grid{grid-template-columns:1fr}.page{padding:18px 12px 90px}.tabs{gap:18px}}
 
-/* Topbar */
-.d-main{margin-left:220px;display:flex;flex-direction:column;min-height:100vh}
-.d-topbar{background:var(--green);height:48px;display:flex;align-items:center;padding:0 24px;gap:20px;position:sticky;top:0;z-index:50}
-.d-tl{font-size:13px;font-weight:500;color:rgba(255,255,255,.7);cursor:pointer;padding:6px 0;border-bottom:2px solid transparent;transition:all .15s}
-.d-tl:hover{color:var(--white)}
-.d-tl.on{color:var(--white);border-bottom-color:var(--white)}
-.d-tl-r{margin-left:auto;display:flex;align-items:center;gap:10px}
-.d-av{width:30px;height:30px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--white)}
+/* Ajustes Bi 24/05: edição minimalista de contas, meios, cartões e wishlist */
 
-/* Page */
-.d-page{padding:24px;flex:1}
-.d-ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px}
-.d-pt{font-size:20px;font-weight:700;letter-spacing:-.3px}
-.d-ps{font-size:12px;color:var(--muted);margin-top:2px}
+.icon-img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+.gift-to{font-size:11px;color:var(--muted);margin-top:6px;display:flex;gap:4px;align-items:center}
 
-/* Mes nav */
-.mes-nav{display:flex;align-items:center;gap:8px}
-.mes-btn{background:var(--white);border:1.5px solid var(--border);border-radius:var(--rsm);padding:5px 10px;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s}
-.mes-btn:hover{border-color:var(--green);color:var(--green)}
-.mes-lbl{font-size:14px;font-weight:600;min-width:80px;text-align:center}
-.mes-tag{background:var(--green);color:var(--white);border-radius:var(--rsm);padding:5px 12px;font-size:12px;font-weight:600}
+.account-card,.pay-card,.click-card,.wish-card{position:relative}
+.edit-pencil,.wish-edit-mini{position:absolute!important;top:10px!important;right:10px!important;width:32px!important;height:32px!important;border-radius:11px!important;background:rgba(255,255,255,.96)!important;border:1px solid var(--line)!important;box-shadow:0 6px 18px rgba(15,23,42,.10)!important;display:grid!important;place-items:center!important;font-size:14px!important;color:#475569!important;z-index:20!important;cursor:pointer!important}
+.edit-pencil:hover,.wish-edit-mini:hover{color:var(--green2)!important;border-color:#bbf7d0!important;background:#f8fffb!important}
+.account-actions{display:none!important}
+.account-logo{font-size:15px;letter-spacing:-.02em}
+.pay-card{min-height:142px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.pay-emoji{width:42px;height:42px;border-radius:14px;background:#f1f5f9;display:grid;place-items:center;margin:0 auto 10px!important}
+.click-card .edit-pencil{top:12px!important;right:12px!important;width:30px!important;height:30px!important;font-size:13px!important}
+.wish-card .wish-edit-mini{opacity:1!important;visibility:visible!important}
+@media(max-width:760px){.edit-pencil,.wish-edit-mini{width:30px!important;height:30px!important;top:8px!important;right:8px!important}.pay-card{min-height:118px}}
 
-/* Cards e grids */
-.card{background:var(--white);border-radius:var(--rlg);border:1px solid var(--border);box-shadow:var(--shadow)}
-.cp{padding:18px 20px}
-.ct{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:10px}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-.g21{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:18px}
 
-/* Metric cards */
-.mc{background:var(--white);border-radius:var(--rlg);border:1px solid var(--border);padding:16px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.mc-lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.mc-val{font-size:22px;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:-.5px}
-.mc-sub{display:flex;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
-.mc-sub-i .s-l{font-size:10px;color:var(--light);font-weight:500;margin-bottom:1px}
-.mc-sub-i .s-v{font-size:12px;font-weight:600}
-.mc-ic{position:absolute;right:16px;top:16px;font-size:26px;opacity:.1}
-.mc-receita .mc-lbl{color:var(--green)}
-.mc-despesa .mc-lbl{color:var(--red)}
-.mc-saldo .mc-lbl{color:var(--blue)}
+.account-logo img,.pay-emoji img,.cartao-logo img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.config-hint{display:inline-flex;margin-top:12px;font-size:11px;font-weight:700;color:var(--muted);background:#f1f5f9;border-radius:999px;padding:6px 10px}
 
-/* Prog bar */
-.pb{background:#f1f5f9;border-radius:99px;height:6px;overflow:hidden;margin:6px 0}
-.pf{height:6px;border-radius:99px;transition:width .6s}
+/* Ajustes pacote: ações reais, espaçamento padronizado e edição minimalista */
+.section-card{margin-bottom:18px}.card-title{min-height:36px}.content-stack{display:grid;gap:18px}.row-list{display:grid;gap:10px}.editable-row{position:relative;border:1px solid var(--line);border-radius:14px;background:#fff;padding:14px 48px 14px 14px;display:grid;gap:8px}.editable-row-title{font-weight:850}.editable-row-sub{font-size:12px;color:var(--muted)}.edit-pencil,.wish-edit-mini,.icon-only{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:10px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow2);display:grid;place-items:center;color:#334155;font-weight:800}.edit-pencil:hover,.wish-edit-mini:hover,.icon-only:hover{border-color:#cbd5e1;background:#f8fafc}.mini-add{width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow2);display:grid;place-items:center;font-size:20px;font-weight:850;color:#0f172a}.mini-add:hover{background:#f8fafc}.toolbar-clean{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}.toolbar-clean h2{font-size:22px;letter-spacing:-.04em}.form-save{height:40px;border-radius:12px;background:var(--blue);color:#fff;padding:0 16px;font-weight:850}.form-danger{height:40px;border-radius:12px;background:var(--red-soft);color:#991b1b;padding:0 16px;font-weight:850}.edit-actions{gap:10px}.settings-card{min-height:170px}.settings-card .edit-pencil{position:absolute}.settings-card{position:relative}.report-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}.report-card{padding:18px}.report-label{font-size:12px;color:var(--muted);font-weight:800}.report-value{font-size:25px;font-weight:850;margin-top:8px}.report-section{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.debt-list{display:grid;gap:12px}.loan-card{position:relative;padding:16px 54px 16px 16px}.wish-actions{display:flex;gap:8px}.wish-action{height:36px;border:1px solid var(--line);background:white;border-radius:10px;padding:0 12px;font-weight:800}.wish-action.primary{background:var(--green);border-color:var(--green);color:#fff}.wish-card{position:relative}.wish-board{align-items:start}.wish-title{line-height:1.1}.section-subtitle{line-height:1.45}.summary-line{min-height:38px;align-items:center}.budget-row{position:relative}.budget-row .edit-pencil{position:static;box-shadow:none;margin-left:auto}.budget-row{grid-template-columns:38px 1fr auto 36px}.meta-line{position:relative;padding-right:48px}.tab-count{margin-left:4px}.debt-actions{display:flex;align-items:center;gap:8px}.modal-small-note{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.4}
 
-/* Gauge */
-.gauge-wrap{display:flex;align-items:center;gap:20px}
-.gauge-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
-.gs{background:var(--bg);border-radius:var(--rsm);padding:10px 12px}
-.gs-l{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--light);margin-bottom:2px}
-.gs-v{font-size:14px;font-weight:700;font-family:'DM Mono',monospace}
 
-/* Categoria items */
-.cat-item{padding:12px 0;border-bottom:1px solid var(--border)}
-.cat-item:last-child{border-bottom:none}
-.cat-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.cat-nm{font-size:13px;font-weight:500;display:flex;align-items:center;gap:7px}
-.cat-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.cat-vl{text-align:right}
-.cat-g{font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
-.cat-l{font-size:10px;color:var(--muted)}
-.cat-ft{display:flex;justify-content:space-between;margin-top:4px;font-size:11px}
+.account-balance-summary{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}.balance-summary-card{padding:20px;border-radius:18px}.balance-summary-card h3{font-size:15px;font-weight:850;margin-bottom:18px}.balance-summary-card strong{display:block;font-size:30px;letter-spacing:-.05em;margin-bottom:18px}.balance-summary-card .line{height:1px;background:var(--line)}.wishlist-modal h3{font-size:20px;letter-spacing:-.03em;margin-bottom:18px}.wishlist-modal .edit-grid{grid-template-columns:1fr 1fr}.wishlist-modal .edit-field label{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#64748b}.wishlist-modal input,.wishlist-modal select,.wishlist-modal textarea{background:#f8fafc}.wish-image-drop{grid-column:1/-1}.wish-dropzone{border:1.5px dashed #cbd5e1;border-radius:16px;background:#f8fafc;min-height:116px;display:grid;place-items:center;text-align:center;color:#64748b;font-weight:800;padding:18px}.wish-img-url,.wish-file,.wish-observacao{grid-column:1/-1}.wishlist-modal .edit-actions{justify-content:flex-end;margin-top:22px}.wish-link{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#334155;text-decoration:underline}.modal-x{position:absolute;right:20px;top:18px;width:36px;height:36px;border-radius:12px;background:#fff;border:1px solid var(--line);font-size:18px;font-weight:900}.modal-x:hover{background:#f8fafc}@media(max-width:700px){.account-balance-summary{grid-template-columns:1fr}.wishlist-modal .edit-grid{grid-template-columns:1fr}}
+.goals-page{display:grid;gap:18px}.goals-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}.goals-head h2{font-size:20px;letter-spacing:-.03em;margin-bottom:4px}.goals-head p{color:var(--muted);font-size:14px}.primary-action{height:40px;border-radius:14px;background:var(--blue);color:#fff;padding:0 16px;font-weight:850;box-shadow:var(--shadow2)}.goals-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.goal-card{position:relative;overflow:hidden;border-radius:18px;padding:0;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow2)}.goal-edit{top:14px;right:14px;z-index:2}.goal-media{height:116px;background:linear-gradient(180deg,#eef4fb 0%,#edf3fa 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.goal-media img{width:100%;height:100%;object-fit:cover;display:block}.goal-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:74px}.goal-body{padding:18px 18px 16px;display:grid;gap:12px}.goal-name{font-size:16px;font-weight:850;line-height:1.2}.goal-meta{font-size:14px;color:var(--muted)}.goal-amount{font-size:24px;font-weight:900;letter-spacing:-.03em}.goal-bar{height:8px;border-radius:999px;background:#e5eaf1;overflow:hidden}.goal-bar i{display:block;height:100%;background:var(--green);border-radius:999px}.goal-foot{font-size:14px;color:#64748b}.goal-foot b{color:#475569}.goal-modal .edit-grid{grid-template-columns:1fr 1fr}.goal-modal .goal-dropzone{grid-column:1/-1}.goal-drop{border:1.5px dashed #cfd8e3;border-radius:16px;background:#f8fafc;min-height:108px;display:grid;place-items:center;text-align:center;color:#64748b;font-weight:700;padding:16px}.goal-drop small{display:block;color:#94a3b8;font-weight:600;margin-top:6px}.goal-url,.goal-file,.goal-obs{grid-column:1/-1}.goal-modal .edit-actions{justify-content:flex-end}.goal-close-x{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow2);font-size:18px;font-weight:900;display:grid;place-items:center}.goal-status{min-width:100%}@media(max-width:1200px){.goals-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:900px){.goals-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.goals-head{align-items:flex-start}}@media(max-width:560px){.goals-grid{grid-template-columns:1fr}.goals-head{flex-direction:column;align-items:stretch}.primary-action{align-self:flex-end;width:max-content}.goal-modal .edit-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.report-grid{grid-template-columns:1fr 1fr}.report-section{grid-template-columns:1fr}.toolbar-clean{align-items:flex-start}.kpis{grid-template-columns:1fr 1fr}.debt-actions{flex-wrap:wrap}.budget-row{grid-template-columns:34px 1fr}.budget-row .budget-money{grid-column:2}.budget-row .edit-pencil{grid-column:1/3;justify-self:end}.wish-board{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.report-grid,.kpis,.wish-board{grid-template-columns:1fr}.toolbar-clean h2{font-size:20px}.mini-add{width:36px;height:36px}.card-title{align-items:flex-start}.debt-actions{justify-content:flex-start}.editable-row{padding-right:46px}}
 
-/* Lançamentos desktop */
-.li-d{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--border);transition:background .1s}
-.li-d:last-child{border-bottom:none}
-.li-d:hover{background:#fafbfc}
-.li-d-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.li-d-info{flex:1;min-width:0}
-.li-d-nm{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.li-d-mt{font-size:11px;color:var(--muted);margin-top:1px}
-.li-d-val{font-size:13px;font-weight:700;font-family:'DM Mono',monospace;flex-shrink:0}
 
-/* Metas desktop */
-.meta-d{padding:14px 0;border-bottom:1px solid var(--border)}
-.meta-d:last-child{border-bottom:none}
-.meta-d-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
-.meta-d-nm{font-size:13px;font-weight:600}
-.meta-d-pct{font-size:18px;font-weight:700;font-family:'DM Mono',monospace}
-.meta-d-vls{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:5px;font-family:'DM Mono',monospace}
+.file-note{font-size:11px;color:var(--muted);margin-top:6px}.edit-field input[type="file"]{padding:10px;background:#fff;cursor:pointer}.image-field-wide{grid-column:1/-1}
 
-/* Cartões desktop */
-.cartao-d{background:var(--white);border-radius:var(--rlg);border:1px solid var(--border);padding:14px 16px;box-shadow:var(--shadow)}
-.cartao-d-h{display:flex;align-items:center;gap:9px;margin-bottom:10px}
-.cartao-d-ic{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.cartao-d-nm{font-size:13px;font-weight:600}
-.cartao-d-vn{font-size:10px;color:var(--muted)}
-.cartao-d-val{font-size:18px;font-weight:700;font-family:'DM Mono',monospace;margin-bottom:4px}
-.cartao-d-ft{display:flex;justify-content:space-between;align-items:center}
+/* orçamento no estilo lista limpa */
+.budget-page-clean{display:grid;gap:18px}.budget-clean-section{padding:22px}.budget-clean-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}.budget-clean-head h2{font-size:18px;font-weight:900;letter-spacing:-.03em;margin:0 0 6px}.budget-clean-head p{font-size:13px;color:var(--muted);margin:0}.primary-action{height:36px;border-radius:10px;background:var(--blue);color:white;padding:0 16px;font-weight:900;white-space:nowrap}.budget-summary-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.budget-summary-card{min-height:132px;border:1px solid var(--line);border-radius:16px;padding:22px 24px;background:#fff}.budget-summary-card span{display:block;font-size:13px;font-weight:850;color:#0f172a;margin-bottom:18px}.budget-summary-card strong{display:block;font-size:28px;font-weight:900;letter-spacing:.01em;border-bottom:1px solid var(--line);padding-bottom:18px}.budget-summary-card.available strong{color:var(--green2)}.budget-clean-title{font-size:18px;font-weight:900;letter-spacing:-.03em;margin-bottom:22px}.budget-clean-list{display:grid}.budget-clean-row{position:relative;display:grid;grid-template-columns:38px 1fr 36px;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.budget-clean-row:last-child{border-bottom:0}.budget-clean-icon{width:36px;height:36px;border-radius:11px;background:#f1f5f9;display:grid;place-items:center;font-size:16px}.budget-clean-main{min-width:0}.budget-clean-row-top{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;margin-bottom:6px}.budget-clean-row-top strong{font-size:15px;font-weight:900}.budget-clean-row-top span{font-size:14px;color:#64748b;white-space:nowrap}.budget-clean-row-top span b{color:#0f172a}.budget-clean-bar{height:8px;background:#e8eef5;border-radius:999px;overflow:hidden}.budget-clean-bar i{display:block;height:100%;border-radius:999px;background:var(--green);min-width:0}.budget-clean-main small{display:block;color:#64748b;font-size:12px;margin-top:5px}.budget-pencil{position:static;box-shadow:none;background:#fff}.budget-clean-row .edit-pencil{width:34px;height:34px}
+@media(max-width:880px){.budget-clean-section{padding:16px}.budget-clean-head{align-items:center}.budget-summary-cards{grid-template-columns:1fr}.budget-summary-card{min-height:auto;padding:16px}.budget-summary-card strong{font-size:22px}.budget-clean-row{grid-template-columns:34px 1fr 34px;gap:10px}.budget-clean-row-top{grid-template-columns:1fr}.budget-clean-row-top span{white-space:normal}.primary-action{height:34px;padding:0 12px}}
 
-/* Wishlist desktop */
-.wish-d{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
-.wish-d:last-child{border-bottom:none}
-.wish-d-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.wish-d-nm{flex:1;font-size:13px;font-weight:500}
-.wish-d-val{font-size:13px;font-weight:600;font-family:'DM Mono',monospace;color:var(--muted)}
 
-/* Score desktop */
-.score-big{font-size:68px;font-weight:700;font-family:'DM Mono',monospace;line-height:1}
-.score-dez{font-size:30px;color:var(--muted)}
-.score-ch{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
-.score-ch:last-child{border-bottom:none}
+/* Ajustes Bi - espaçamento, lista de mercado, relatórios e dívidas */
+.page{padding-top:30px}
+.toolbar-clean,.wish-section-head,.card-title,.debt-actions,.report-section-title{line-height:1.35}
+.section-card{padding:20px;margin-bottom:18px}
+.section-subtitle{margin-top:4px;margin-bottom:14px;line-height:1.45}
+.wish-title,.card-title,.report-title-main{line-height:1.15}
+.wish-tabs{margin:18px 0 24px}
+.wish-section-head{margin-bottom:16px}
+.wish-board{gap:18px}
+.shopping-list-wrap{display:grid;gap:14px;margin-top:6px}
+.market-add-row{display:flex;justify-content:flex-start;margin:8px 0 4px}
+.market-add-row .primary-action{height:38px;padding:0 14px;border-radius:12px}
+.market-list{display:grid;gap:10px;max-width:780px}
+.market-row{display:grid;grid-template-columns:28px minmax(0,1fr) 120px 38px;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px 14px;box-shadow:var(--shadow2);line-height:1.35}
+.market-check{width:18px;height:18px;accent-color:var(--green)}
+.market-item{font-weight:850;color:var(--text);min-width:0}
+.market-item.done{text-decoration:line-through;color:var(--muted)}
+.market-unit{color:#475569;font-weight:800;font-size:13px}
+.market-empty{padding:20px;border:1px dashed var(--line2);border-radius:16px;color:var(--muted);background:#fff;line-height:1.5;max-width:780px}
+.wish-link.clickable{color:#6d28d9;text-decoration:underline;text-underline-offset:2px}
+.wish-link.clickable:hover{opacity:.8}
+.edit-modal.market-modal .edit-grid{grid-template-columns:1fr 160px 180px}
+.edit-modal.market-modal .edit-actions{justify-content:flex-end}
+.report-layout{display:grid;gap:18px}
+.report-kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.report-card-clean{padding:18px;min-height:118px}
+.report-card-clean .label{font-size:12px;font-weight:850;color:#64748b;margin-bottom:10px}
+.report-card-clean .value{font-size:26px;font-weight:900;letter-spacing:-.04em}
+.report-two-col{display:grid;grid-template-columns:1.25fr .9fr;gap:18px}
+.report-stack{display:grid;gap:12px}
+.report-note{border:1px solid var(--line);border-radius:16px;padding:15px 16px;background:#fff;line-height:1.5}
+.report-note b{display:block;margin-bottom:6px}
+.report-chart{height:260px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#f8fafc);padding:16px}
+.fake-line-chart{height:190px;position:relative;border-bottom:1px solid #cbd5e1;border-left:1px solid #e2e8f0;margin-top:10px;background:repeating-linear-gradient(to top,#eef2f7 0,#eef2f7 1px,transparent 1px,transparent 38px)}
+.fake-line-chart svg{position:absolute;inset:0;width:100%;height:100%}
+.chart-legend{display:flex;justify-content:center;gap:14px;font-size:12px;color:#64748b;margin-top:10px}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.export-list .summary-line{min-height:48px}
+.ranking-box{min-height:96px;border:1px dashed #cbd5e1;border-radius:16px;display:grid;place-items:center;color:#64748b}
+.month-resume{padding:18px;border-radius:18px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow2);line-height:1.6}
+.debt-main-card{position:relative;display:grid;grid-template-columns:220px minmax(0,1fr) 340px;gap:20px;align-items:start;padding:18px}
+.debt-photo{border-radius:18px;background:#f1f5f9;border:1px solid var(--line);min-height:240px;height:100%;display:grid;place-items:center;overflow:hidden;align-self:stretch}
+.debt-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.debt-photo-placeholder{font-size:72px}
+.debt-content{display:grid;gap:14px;padding-top:4px}
+.debt-topline{display:flex;align-items:center;justify-content:space-between;gap:12px}.debt-main-title{font-size:18px;font-weight:800;color:var(--text)}
+.debt-value{font-size:28px;line-height:1.1;font-weight:900;color:var(--blue)}
+.debt-subgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.debt-sub{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:6px}.debt-sub span{color:var(--muted);font-size:13px;font-weight:700}.debt-sub b{font-size:16px}
+.debt-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:12px}.debt-breakdown-col{display:grid;gap:12px;align-self:start}
+.debt-person{padding:14px 16px;display:grid;gap:10px}
+.debt-person h3{margin-bottom:8px}
+@media(max-width:1050px){.report-kpi-grid{grid-template-columns:1fr 1fr}.report-two-col{grid-template-columns:1fr}.debt-main-card{grid-template-columns:1fr}.debt-photo{min-height:180px}.debt-breakdown{grid-template-columns:1fr}}
+@media(max-width:720px){.market-row{grid-template-columns:26px minmax(0,1fr) 80px 34px;padding:12px}.edit-modal.market-modal .edit-grid{grid-template-columns:1fr}.report-kpi-grid{grid-template-columns:1fr}.debt-subgrid{grid-template-columns:1fr}.debt-value{font-size:28px}}
 
-/* Parcelas desktop */
-.par-d{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)}
-.par-d:last-child{border-bottom:none}
-.par-d-nm{font-size:13px;font-weight:500}
-.par-d-mt{font-size:11px;color:var(--muted);margin-top:2px}
-.par-d-val{font-size:13px;font-weight:700;font-family:'DM Mono',monospace;color:var(--green)}
 
-/* Badges */
-.badge{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;white-space:nowrap}
-.bg-green{background:#dcfce7;color:#166534}
-.bg-amber{background:#fef3c7;color:#92400e}
-.bg-red{background:#fee2e2;color:#991b1b}
-.bg-gray{background:#f1f5f9;color:var(--muted)}
-.bg-blue{background:#dbeafe;color:#1d4ed8}
+.settings-page-v2{display:grid;gap:18px}.settings-header-v2{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}.settings-header-v2 h2{font-size:24px;letter-spacing:-.04em;margin-bottom:4px}.settings-header-v2 p{color:var(--muted);font-size:13px;line-height:1.45}.settings-layout-v2{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.settings-block-v2{padding:18px}.settings-block-v2 h3{font-size:18px;margin-bottom:6px}.settings-block-v2>p{color:var(--muted);font-size:13px;line-height:1.45;margin-bottom:14px}.settings-list-v2{display:grid;gap:10px}.settings-item-v2{border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px;display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;min-height:72px}.settings-item-icon{width:40px;height:40px;border-radius:14px;background:#f1f5f9;display:grid;place-items:center;font-size:19px}.settings-item-title{font-weight:850;font-size:14px}.settings-item-desc{color:var(--muted);font-size:12px;line-height:1.35;margin-top:3px}.settings-link-btn{height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;padding:0 12px;font-size:12px;font-weight:850;color:#334155}.settings-link-btn:hover{border-color:#22c55e;color:#15803d}.toggle-btn{width:42px;height:24px;border-radius:999px;background:#cbd5e1;position:relative;flex-shrink:0;transition:.2s}.toggle-btn:after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(15,23,42,.18);transition:.2s}.toggle-btn.on{background:var(--green)}.toggle-btn.on:after{left:21px}.notification-row-v2{grid-template-columns:42px 1fr auto}.settings-side-stack{display:grid;gap:18px}.settings-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.settings-mini-card{border:1px solid var(--line);border-radius:15px;background:#fff;padding:14px}.settings-mini-card b{display:block;font-size:13px;margin-bottom:6px}.settings-mini-card span{font-size:12px;color:var(--muted);line-height:1.35}.time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.time-row input,.time-row select{height:38px;border:1px solid var(--line);border-radius:12px;background:#f8fafc;padding:0 10px}.settings-note-v2{border:1px solid #bbf7d0;background:#f0fdf4;color:#166534;border-radius:15px;padding:12px 14px;font-size:13px;line-height:1.45;font-weight:700}
+.settings-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.settings-form-field{display:grid;gap:6px}.settings-form-field.full{grid-column:1/-1}.settings-form-field label{font-size:11px;font-weight:850;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.settings-form-field input,.settings-form-field select,.settings-form-field textarea{height:40px;border:1px solid var(--line);border-radius:12px;background:#f8fafc;padding:0 12px}.settings-form-field textarea{height:92px;padding-top:10px;resize:vertical}.settings-feedback{margin-top:12px;border:1px solid #bbf7d0;background:#f0fdf4;color:#166534;border-radius:14px;padding:10px 12px;font-size:12px;font-weight:750;line-height:1.4}.settings-link-btn:active{transform:translateY(1px)}@media(max-width:640px){.settings-form-grid{grid-template-columns:1fr}.settings-item-v2{grid-template-columns:36px 1fr}.settings-link-btn{grid-column:2;justify-self:start}}
+@media(max-width:980px){.settings-layout-v2{grid-template-columns:1fr}.settings-header-v2{flex-direction:column}.settings-mini-grid{grid-template-columns:1fr}}@media(max-width:560px){.settings-item-v2{grid-template-columns:36px 1fr auto;padding:12px}.settings-item-icon{width:34px;height:34px;border-radius:12px}.time-row{grid-template-columns:1fr}}
 
-/* Grafico desktop */
-.gc-tabs-d{display:flex;gap:4px;margin-bottom:14px;background:#f1f5f9;border-radius:var(--rsm);padding:3px}
-.gc-tab-d{flex:1;padding:5px;text-align:center;font-size:11px;font-weight:600;color:var(--muted);border-radius:var(--rsm);cursor:pointer;transition:all .15s}
-.gc-tab-d.on{background:var(--white);color:var(--text);box-shadow:var(--shadow)}
+/* ajustes config: rolagem e upload */
+.edit-modal{max-height:88vh;overflow-y:auto;overscroll-behavior:contain}
+.edit-modal-backdrop{align-items:center;overflow-y:auto}
+.settings-preview-img{display:block;max-width:160px;max-height:120px;object-fit:contain;border:1px solid var(--line);border-radius:14px;background:#f8fafc;padding:8px;margin-top:8px}
+.settings-upload-row small,.file-note{font-size:12px;color:var(--muted);line-height:1.35}
+.settings-actions-grid{display:flex;flex-wrap:wrap;gap:10px}
+.settings-action-btn{height:38px;border-radius:12px;border:1px solid var(--line);background:#fff;padding:0 14px;font-weight:800;color:#475569}
+.settings-action-btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.settings-action-btn.danger{background:#fee2e2;border-color:#fecaca;color:#991b1b}
+.settings-divider{grid-column:1/-1;height:1px;background:var(--line);margin:4px 0}
+@media(max-width:640px){.edit-modal{max-height:92vh}.settings-actions-grid{flex-direction:column}.settings-action-btn{width:100%}}
 
-/* ════════════════════════════════════════
-   MOBILE LAYOUT
-════════════════════════════════════════ */
-.m-layout{min-height:100vh;background:var(--bg)}
-
-/* Header mobile */
-.m-hdr{background:var(--green);padding:14px 16px 16px;position:sticky;top:0;z-index:50}
-.m-hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.m-hdr-greeting{font-size:11px;color:rgba(255,255,255,.7)}
-.m-hdr-name{font-size:15px;font-weight:700;color:var(--white)}
-.m-hdr-av{width:34px;height:34px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--white)}
-.m-hdr-bot{display:flex;align-items:center;justify-content:space-between}
-.m-mes{display:flex;align-items:center;gap:8px}
-.m-mes-lbl{font-size:14px;font-weight:600;color:var(--white)}
-.m-arr{font-size:20px;color:rgba(255,255,255,.6);cursor:pointer;padding:0 2px;line-height:1;background:none;border:none}
-.m-hide{font-size:11px;color:rgba(255,255,255,.65);cursor:pointer}
-
-/* Saldo mobile */
-.m-saldo{background:var(--white);margin:0 12px;border-radius:var(--rlg);padding:14px 16px;box-shadow:var(--shadow-md);margin-top:-6px;position:relative;z-index:5}
-.m-sl{font-size:10px;color:var(--muted);font-weight:500;margin-bottom:3px}
-.m-sv{font-size:24px;font-weight:700;font-family:'DM Mono',monospace;letter-spacing:-.5px;margin-bottom:12px}
-.m-sg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.m-si{display:flex;align-items:center;gap:7px}
-.m-si-ic{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.m-si-l{font-size:9px;color:var(--muted);font-weight:500}
-.m-si-v{font-size:12px;font-weight:700;font-family:'DM Mono',monospace}
-
-/* Sec mobile */
-.m-sec{padding:16px 12px 0}
-.m-sec-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.m-sec-t{font-size:13px;font-weight:700}
-.m-sec-l{font-size:11px;color:var(--green);font-weight:600;cursor:pointer}
-
-/* Conta mobile */
-.m-conta{display:flex;align-items:center;gap:10px;padding:11px 13px;background:var(--white);border-radius:var(--r);margin-bottom:7px;box-shadow:var(--shadow)}
-.m-conta-ic{width:32px;height:32px;background:var(--green-lt);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.m-conta-nm{font-size:13px;font-weight:600}
-.m-conta-tp{font-size:10px;color:var(--muted)}
-.m-conta-sl{margin-left:auto;font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
-
-/* Grafico mobile */
-.m-gc{background:var(--white);border-radius:var(--rlg);padding:14px;box-shadow:var(--shadow)}
-.m-gc-tabs{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:2px}
-.m-gc-tab{padding:4px 11px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap;cursor:pointer;border:none;font-family:inherit}
-.m-gc-tab.on{background:var(--text);color:var(--white)}
-.m-gc-tab:not(.on){background:#f1f5f9;color:var(--muted)}
-.m-gc-canvas{position:relative;height:160px;display:flex;align-items:center;justify-content:center}
-.m-gc-ctr{position:absolute;text-align:center;pointer-events:none}
-.m-gc-cv{font-size:15px;font-weight:700;font-family:'DM Mono',monospace}
-.m-gc-cs{font-size:10px;color:var(--muted)}
-.m-dets{margin-top:12px;border-top:1px solid var(--border);padding-top:11px}
-.m-det-ttl{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:9px}
-.m-det{margin-bottom:9px}
-.m-det-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px}
-.m-det-tag{display:inline-flex;padding:2px 9px;border-radius:99px;font-size:10px;font-weight:600;color:var(--white)}
-.m-det-r{text-align:right}
-.m-det-v{font-size:11px;font-weight:600;font-family:'DM Mono',monospace;color:var(--muted)}
-.m-det-p{font-size:10px;color:var(--light)}
-
-/* Lançamentos mobile */
-.m-lg-d{font-size:10px;font-weight:600;color:var(--muted);text-transform:capitalize;padding:10px 12px 4px}
-.m-lg{background:var(--white);border-radius:var(--r);margin:0 12px 5px;overflow:hidden;box-shadow:var(--shadow)}
-.m-li{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-bottom:1px solid var(--border)}
-.m-li:last-child{border-bottom:none}
-.m-li-ic{width:34px;height:34px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.m-li-info{flex:1;min-width:0}
-.m-li-nm{font-size:13px;font-weight:600}
-.m-li-ct{font-size:10px;color:var(--muted);margin-top:2px}
-.m-li-meta{display:flex;align-items:center;gap:5px;margin-top:5px;flex-wrap:wrap}
-.m-li-st{font-size:10px;font-weight:600}
-.m-cat-tag{display:inline-flex;padding:2px 7px;border-radius:99px;font-size:10px;font-weight:600}
-.m-li-val{font-size:13px;font-weight:700;font-family:'DM Mono',monospace;flex-shrink:0}
-
-/* Limites mobile */
-.m-lim{background:var(--white);border-radius:var(--r);padding:12px 14px;box-shadow:var(--shadow);margin-bottom:7px}
-.m-lim-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
-.m-lim-nm{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
-.m-lim-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.m-lim-vls{text-align:right}
-.m-lim-g{font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
-.m-lim-l{font-size:10px;color:var(--muted)}
-.m-lim-ft{display:flex;justify-content:space-between;margin-top:5px;font-size:11px}
-
-/* Metas mobile */
-.m-meta{background:var(--white);border-radius:var(--r);padding:13px 14px;box-shadow:var(--shadow);margin-bottom:7px}
-.m-meta-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
-.m-meta-nm{font-size:13px;font-weight:600}
-.m-meta-pct{font-size:14px;font-weight:700;font-family:'DM Mono',monospace}
-.m-meta-vls{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:5px;font-family:'DM Mono',monospace}
-
-/* Bottom nav mobile */
-.m-bnav{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--border);display:flex;align-items:center;padding:8px 0 max(16px,env(safe-area-inset-bottom));z-index:100;box-shadow:0 -2px 10px rgba(0,0,0,.06)}
-.m-nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:3px 0;border:none;background:transparent;font-family:inherit}
-.m-nb-ic{font-size:21px;color:var(--light)}
-.m-nb-lb{font-size:9px;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:.04em}
-.m-nb.on .m-nb-ic{color:var(--green)}
-.m-nb.on .m-nb-lb{color:var(--green)}
-.m-nb-add{width:50px;height:50px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--white);cursor:pointer;box-shadow:0 4px 14px rgba(26,138,60,.4);border:none;margin-top:-16px}
-.m-content{padding-bottom:80px}
-
-/* Utils */
-.spinner{width:26px;height:26px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;gap:12px;color:var(--muted);font-size:13px}
-.empty{text-align:center;padding:32px;color:var(--muted);font-size:13px}
-.neg{color:var(--red)}.pos{color:var(--green)}
-
-/* Responsividade */
-@media(max-width:768px){
-  .d-layout{display:none}
-  .m-layout{display:block}
-}
-@media(min-width:769px){
-  .d-layout{display:flex}
-  .m-layout{display:none}
-  .login-box{width:400px}
-}
+.nav-icon img{width:18px;height:18px;object-fit:cover;border-radius:5px;display:block}
 </style>
 </head>
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const {useState,useEffect,useRef}=React;
-
-/* ── CONFIG ─────────────────────────────────────── */
+const {useState,useEffect}=React;
 const CFG={
-  SENHA:"bifinancas2026",
-  SHEETS_ID:"1Fr-LDbtpBGoDg8SdUu7Do-npiHvtsa6Jh0Wv5j71qfc",
-  API_KEY:"AIzaSyDNtOqS170mLmHLSArYbCYpQwMklO8I6ys",
-  NOME:"Bianca Andrade Silva",
-  CARTOES:{
-    santander:{nome:"Santander ••7648",emoji:"💳",cor:"#ef4444",venc:6},
-    nubank:{nome:"Nubank ••1160",emoji:"💜",cor:"#8b5cf6",venc:11},
-    mercadopago:{nome:"Mercado Pago ••3106",emoji:"💛",cor:"#f59e0b",venc:11},
-    caedu:{nome:"Caedu ••9868",emoji:"🟢",cor:"#22c55e",venc:10},
-    bb:{nome:"Banco do Brasil ••7881",emoji:"💰",cor:"#3b82f6",venc:10},
-  },
+  SENHA:"bf2026",SHEETS_ID:"SUA_PLANILHA_ID_AQUI",API_KEY:"SUA_GOOGLE_API_KEY_AQUI",NOME:"Bianca Andrade Silva",META_RESERVA:10000,
+  CARRO_TOTAL:40000,CARRO_PAGO:11550,CARRO_FALTA:28450,
+  CARTOES:{santander:{nome:"Santander ••7648",emoji:"💳",cor:"#ef4444",venc:6},nubank:{nome:"Nubank ••1160",emoji:"💜",cor:"#7c3aed",venc:11},mercadopago:{nome:"Mercado Pago ••3106",emoji:"💛",cor:"#f59e0b",venc:11},caedu:{nome:"Caedu ••9868",emoji:"🟢",cor:"#22c55e",venc:10},bb:{nome:"Banco do Brasil ••7881",emoji:"💰",cor:"#2563eb",venc:10}},
   LIMITES:{"Alimentação":600,"Mercado":400,"Transporte/Gasolina":450,"Lazer/Saídas":300,"Roupas/Beleza":200,"Assinaturas":200,"Saúde/Farmácia":150},
-  CORES:["#22c55e","#ef4444","#f97316","#8b5cf6","#3b82f6","#14b8a6","#f59e0b","#ec4899","#06b6d4"],
-  META_RESERVA:10000,
-  DIVIDA_PAIS:19400,
+  CORES:["#22c55e","#2563eb","#fbbf24","#8b5cf6","#ef4444","#94a3b8"],
+  CONTAS:[
+    {nome:"Nubank",tipo:"Conta corrente",saldo:0,status:"Ativa",emoji:"nu",cor:"#7c3aed"},
+    {nome:"Santander",tipo:"Conta bancária",saldo:0,status:"Ativa",emoji:"st",cor:"#ef4444"},
+    {nome:"Mercado Pago",tipo:"Carteira digital",saldo:0,status:"Ativa",emoji:"mp",cor:"#f59e0b"},
+    {nome:"Banco do Brasil",tipo:"Conta bancária",saldo:0,status:"Ativa",emoji:"bb",cor:"#eab308"},
+    {nome:"Dinheiro",tipo:"Carteira física",saldo:0,status:"Ativa",emoji:"R$",cor:"#16a34a"}
+  ],
+  MEIOS:[
+    {nome:"Pix",tipo:"Transferência",conta:"Conta principal",emoji:"⚡"},
+    {nome:"Débito",tipo:"Pagamento",conta:"Conta vinculada",emoji:"💳"},
+    {nome:"Dinheiro",tipo:"Pagamento",conta:"Carteira física",emoji:"💵"},
+    {nome:"Cartão de crédito",tipo:"Crédito",conta:"Cartões cadastrados",emoji:"💳"}
+  ],
+  NOTIFICACOES:[
+    {nome:"Resumo diário",desc:"Enviar resumo do dia pelo Telegram",ativo:true},
+    {nome:"Vencimento de fatura",desc:"Avisar antes do vencimento dos cartões",ativo:true},
+    {nome:"Orçamento estourado",desc:"Avisar quando uma categoria passar do limite",ativo:true},
+    {nome:"Lembrete de reserva",desc:"Lembrar de guardar dinheiro na reserva",ativo:true},
+    {nome:"Parcelas encerrando",desc:"Avisar quando uma compra parcelada estiver acabando",ativo:false}
+  ]
 };
+const brl=v=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(Number(v)||0);
+const moneyNum=v=>Number(String(v||0).replace(/\./g,'').replace(',','.').replace(/[^0-9.-]/g,''))||0;
+const MA=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`};
+const mlong=m=>{const n=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];const[y,mo]=m.split('-');return `${n[+mo-1]}/${y.slice(2)}`};
+const mnext=m=>{const[y,mo]=m.split('-').map(Number);return mo===12?`${y+1}-01`:`${y}-${String(mo+1).padStart(2,'0')}`};
+const mprev=m=>{const[y,mo]=m.split('-').map(Number);return mo===1?`${y-1}-12`:`${y}-${String(mo-1).padStart(2,'0')}`};
+const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+const formKey=s=>{const n=norm(s);if(n.includes('nubank'))return'nubank';if(n.includes('santander'))return'santander';if(n.includes('mercado'))return'mercadopago';if(n.includes('caedu'))return'caedu';if(n==='bb'||n.includes('bancodobrasil'))return'bb';return n};
+async function fetchAba(a){if(!CFG.SHEETS_ID.includes('SUA_')&&!CFG.API_KEY.includes('SUA_')){const u=`https://sheets.googleapis.com/v4/spreadsheets/${CFG.SHEETS_ID}/values/${encodeURIComponent(a)}?key=${CFG.API_KEY}`;const r=await fetch(u);const d=await r.json();if(d.values&&d.values.length>1){const[h,...rows]=d.values;return rows.map(row=>Object.fromEntries(h.map((k,i)=>[k,row[i]||''])));}}return []}
+async function fetchAll(){const[l,m,w,p]=await Promise.all([fetchAba('Lançamentos'),fetchAba('Metas'),fetchAba('Wishlist'),fetchAba('Parcelas')]);return{lancamentos:l,metas:m,wishlist:w,parcelas:p}}
+function demoData(){return{lancamentos:[{Data:'06/05/2026',Tipo:'gasto',Categoria:'Alimentação',Descrição:'Supermercado Bom Preço',Valor:85.70,Forma_Pagto:'débito',Mês:'2026-05'},{Data:'06/05/2026',Tipo:'gasto',Categoria:'Transporte/Gasolina',Descrição:'Uber',Valor:27.40,Forma_Pagto:'nubank',Mês:'2026-05'},{Data:'05/05/2026',Tipo:'entrada',Categoria:'Salário',Descrição:'Salário',Valor:2450,Forma_Pagto:'pix',Mês:'2026-05'},{Data:'04/05/2026',Tipo:'gasto',Categoria:'Saúde/Farmácia',Descrição:'Academia Fit',Valor:89.90,Forma_Pagto:'santander',Mês:'2026-05'},{Data:'03/05/2026',Tipo:'gasto',Categoria:'Outros',Descrição:'Netflix',Valor:39.90,Forma_Pagto:'nubank',Mês:'2026-05'}],metas:[{Nome:'Reserva de emergência',Valor_Atual:2000,Valor_Meta:10000,Status:'Em andamento'},{Nome:'Dívida com o pai',Valor_Atual:1000,Valor_Meta:5400,Status:'Em andamento'},{Nome:'Dívida com a mãe',Valor_Atual:0,Valor_Meta:15000,Status:'Em andamento'}],wishlist:[{Item:'Airfryer',Valor_Est:350,Prioridade:'média',Status:'Pendente'}],parcelas:[{Descrição:'Notebook Dell Inspiron',Cartão:'nubank',Valor_Parcela:150,Parcela_Atual:6,Total_Parcelas:12,Valor_Total:1800,Encerra_Em:'05/12/2026'},{Descrição:'Sofá retrátil',Cartão:'santander',Valor_Parcela:200,Parcela_Atual:3,Total_Parcelas:10,Valor_Total:2000,Encerra_Em:'10/09/2026'}]}}
+function useDados(logado){const[d,setD]=useState(null),[loading,setL]=useState(true);useEffect(()=>{if(!logado)return;fetchAll().then(x=>{if(!x.lancamentos.length&&!x.metas.length)setD(demoData());else setD(x)}).catch(()=>setD(demoData())).finally(()=>setL(false))},[logado]);return{dados:d,loading}}
+function calcMes(dados,mes){const lst=(dados.lancamentos||[]).filter(r=>(r.Mês||r['Mês'])===mes);const gastos=lst.filter(r=>(r.Tipo||r['Tipo'])==='gasto').reduce((s,r)=>s+moneyNum(r.Valor||r['Valor']),0);const entradas=lst.filter(r=>(r.Tipo||r['Tipo'])==='entrada').reduce((s,r)=>s+moneyNum(r.Valor||r['Valor']),0);const saldo=entradas-gastos;const catTotals={};lst.filter(r=>(r.Tipo||r['Tipo'])==='gasto').forEach(r=>{const c=r.Categoria||r['Categoria']||'Outros';catTotals[c]=(catTotals[c]||0)+moneyNum(r.Valor||r['Valor'])});const topCats=Object.entries(catTotals).sort((a,b)=>b[1]-a[1]).slice(0,6);return{lst,gastos,entradas,saldo,catTotals,topCats}}
+const reservaAtual=dados=>{const m=(dados.metas||[]).find(x=>norm(x.Nome||x['Nome']).includes('reserva'));return moneyNum(m?.Valor_Atual||m?.['Valor_Atual']||2000)};
+const faturasTotal=(dados,mes)=>calcMes(dados,mes).lst.filter(r=>(r.Tipo||r['Tipo'])==='gasto'&&CFG.CARTOES[formKey(r.Forma_Pagto||r['Forma_Pagto'])]).reduce((s,r)=>s+moneyNum(r.Valor||r['Valor']),0);
+const faturaCartao=(dados,mes,key)=>calcMes(dados,mes).lst.filter(r=>(r.Tipo||r['Tipo'])==='gasto'&&formKey(r.Forma_Pagto||r['Forma_Pagto'])===key);
+function Progress({pct,color='var(--green)'}){return <div className="progress"><span style={{width:`${Math.min(100,Math.max(0,pct||0))}%`,background:color}}/></div>}
+function Login({ok}){const[s,setS]=useState(''),[e,setE]=useState('');return <div className="login-wrap"><div className="login-box"><div className="login-logo"><div className="login-ic">💚</div><div className="login-nm">BiFinanças</div></div><form onSubmit={ev=>{ev.preventDefault();const senha=localStorage.getItem('bf-senha-local')||CFG.SENHA;if(s===senha||s===CFG.SENHA){localStorage.setItem('bf-senha-local',s===CFG.SENHA?CFG.SENHA:senha);ok()}else setE('Senha incorreta')}}><label className="l-lbl">Senha de acesso</label><input className="l-inp" type="password" value={s} onChange={ev=>setS(ev.target.value)} autoFocus/><button className="l-btn">Entrar</button>{e&&<div className="l-err">{e}</div>}</form></div></div>}
+function KPI({label,value,icon,color='green',sub,progress}){return <div className="card kpi"><div className="kpi-head"><div className="kpi-label"><span style={{color:`var(--${color})`}}>↗</span>{label}</div><div className="mini-ic" style={{background:`var(--${color}-soft)`,color:`var(--${color})`}}>{icon}</div></div><div className={`kpi-value ${color}`}>{value}</div>{progress!=null&&<Progress pct={progress} color={`var(--${color})`}/>} {sub&&<div className="kpi-grid">{sub.map(([l,v])=><div key={l}><div className="kpi-sm-label">{l}</div><div className="kpi-sm-value">{v}</div></div>)}</div>}</div>}
 
-/* ── HELPERS ─────────────────────────────────────── */
-const brl=v=>{try{return new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(+v);}catch{return`R$ ${v}`;}};
-const MA=()=>{const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;};
-const MESES=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const ML=m=>{if(!m)return'';const[y,mo]=m.split('-');return`${MESES[+mo-1]} De ${y}`;};
-const MLS=m=>{if(!m)return'';const[y,mo]=m.split('-');const n=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];return`${n[+mo-1]}/${y.slice(2)}`;};
-const MANT=m=>{const[y,mo]=m.split('-').map(Number);return mo===1?`${y-1}-12`:`${y}-${String(mo-1).padStart(2,'0')}`;};
-const MSEG=m=>{const[y,mo]=m.split('-').map(Number);return mo===12?`${y+1}-01`:`${y}-${String(mo+1).padStart(2,'0')}`;};
-const CST=p=>p>=95?'#ef4444':p>=75?'#f59e0b':'#22c55e';
-const BCL=p=>p>=95?'bg-red':p>=75?'bg-amber':'bg-green';
-const BLB=p=>p>=95?'Acima':'Em atenção';
-const DV=d=>{const h=new Date().getDate();return d>=h?d-h:30-h+d;};
-
-async function fetchAba(a){
-  const u=`https://sheets.googleapis.com/v4/spreadsheets/${CFG.SHEETS_ID}/values/${encodeURIComponent(a)}?key=${CFG.API_KEY}`;
-  const r=await fetch(u);const d=await r.json();
-  if(!d.values||d.values.length<2)return[];
-  const[h,...rows]=d.values;
-  return rows.map(row=>Object.fromEntries(h.map((k,i)=>[k,row[i]||''])));
-}
-async function fetchAll(){
-  const[l,m,w,p]=await Promise.all([fetchAba('Lançamentos'),fetchAba('Metas'),fetchAba('Wishlist'),fetchAba('Parcelas')]);
-  return{lancamentos:l,metas:m,wishlist:w,parcelas:p};
-}
-
-/* ── COMPONENTES COMUNS ─────────────────────────── */
-function Prog({atual,meta,cor}){
-  const p=meta>0?Math.min((atual/meta)*100,100):0;
-  return<div className="pb"><div className="pf" style={{width:`${p}%`,background:cor||'var(--green)'}}/></div>;
-}
-
-function GaugeSVG({pct,cor,size=110}){
-  const r=44,cx=55,cy=55,c=2*Math.PI*r;
-  const dash=(Math.min(pct,100)/100)*c*.75;
-  return<svg width={size} height={size} viewBox="0 0 110 110">
-    <circle cx={cx} cy={cy} r={r} fill="none" stroke="#f1f5f9" strokeWidth="9" strokeDasharray={`${c*.75} ${c*.25}`} strokeDashoffset={c*.125} strokeLinecap="round"/>
-    <circle cx={cx} cy={cy} r={r} fill="none" stroke={cor} strokeWidth="9" strokeDasharray={`${dash} ${c-dash}`} strokeDashoffset={c*.125} strokeLinecap="round" style={{transition:'stroke-dasharray .8s'}}/>
-    <text x={cx} y={cy+7} textAnchor="middle" fontSize="17" fontWeight="700" fontFamily="DM Mono,monospace" fill={cor}>{Math.round(pct)}%</text>
-  </svg>;
-}
-
-function Login({ok}){
-  const[s,setS]=useState('');const[e,setE]=useState('');
-  const sub=ev=>{ev.preventDefault();if(s===CFG.SENHA)ok();else setE('Senha incorreta.');};
-  return<div className="login-wrap">
-    <div className="login-box">
-      <div className="login-logo"><div className="login-ic">💚</div><div className="login-nm">BiFinanças</div></div>
-      <form onSubmit={sub}>
-        <label className="l-lbl">Senha de acesso</label>
-        <input className="l-inp" type="password" placeholder="••••••••" value={s} onChange={ev=>{setS(ev.target.value);setE('');}} autoFocus/>
-        <button className="l-btn">Entrar</button>
-        {e&&<div className="l-err">{e}</div>}
-      </form>
-    </div>
-  </div>;
-}
-
-/* ── LÓGICA COMPARTILHADA ───────────────────────── */
-function useDados(logado){
-  const[dados,setDados]=useState(null);
-  const[loading,setLoading]=useState(true);
-  useEffect(()=>{
-    if(!logado)return;
-    fetchAll().then(setDados).catch(()=>setDados({lancamentos:[],metas:[],wishlist:[],parcelas:[]})).finally(()=>setLoading(false));
-  },[logado]);
-  return{dados,loading};
-}
-
-function calcMes(dados,mes){
-  const lst=dados.lancamentos.filter(r=>r['Mês']===mes);
-  const gastos=lst.filter(r=>r['Tipo']==='gasto').reduce((s,r)=>s+Number(r['Valor']||0),0);
-  const entradas=lst.filter(r=>r['Tipo']==='entrada').reduce((s,r)=>s+Number(r['Valor']||0),0);
-  const saldo=entradas-gastos;
-  const catTotals={};
-  lst.filter(r=>r['Tipo']==='gasto').forEach(r=>{const c=r['Categoria']||'Outros';catTotals[c]=(catTotals[c]||0)+Number(r['Valor']||0);});
-  const catCores={};
-  Object.keys(catTotals).sort((a,b)=>catTotals[b]-catTotals[a]).forEach((c,i)=>{catCores[c]=CFG.CORES[i%CFG.CORES.length];});
-  const topCats=Object.entries(catTotals).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  const grupos={};
-  [...lst].reverse().forEach(r=>{const d=r['Data']||'Sem data';if(!grupos[d])grupos[d]=[];grupos[d].push(r);});
-  return{lst,gastos,entradas,saldo,catTotals,catCores,topCats,grupos};
-}
-
-/* ════════════════════════════════════════
-   DESKTOP PAGES
-════════════════════════════════════════ */
-function DPageInicio({dados,mes,setMes}){
-  const{gastos,entradas,saldo,catCores,topCats,grupos}=calcMes(dados,mes);
-  const ref=useRef();
-  useEffect(()=>{
-    if(!ref.current)return;
-    const ex=Chart.getChart(ref.current);if(ex)ex.destroy();
-    if(!topCats.length)return;
-    new Chart(ref.current,{type:'doughnut',data:{labels:topCats.map(x=>x[0]),datasets:[{data:topCats.map(x=>x[1]),backgroundColor:CFG.CORES,borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'68%'}});
-  },[dados,mes]);
-  const ultimos=Object.values(grupos).flat().slice(0,10);
-  return<>
-    <div className="d-ph">
-      <div><div className="d-pt">Planejar sua grana</div></div>
-      <div className="mes-nav">
-        <button className="mes-btn" onClick={()=>setMes(MANT(mes))}>‹</button>
-        <div className="mes-lbl">{MLS(mes)}</div>
-        <button className="mes-btn" onClick={()=>setMes(MSEG(mes))}>›</button>
-        <div className="mes-tag">Esse mês</div>
-      </div>
-    </div>
-    <div className="g4">
-      {[
-        {cls:'mc-receita',ic:'📈',lb:'Receitas',val:entradas,s1:'Recebido',v1:entradas,s2:'A receber',v2:0},
-        {cls:'mc-despesa',ic:'📉',lb:'Despesas',val:gastos,s1:'Pago',v1:gastos,s2:'A pagar',v2:0},
-        {cls:'mc-saldo',ic:'💰',lb:'Saldo',val:saldo,s1:'Previsto',v1:CFG.CARTOES?saldo:saldo},
-      ].map(({cls,ic,lb,val,s1,v1,s2,v2})=>(
-        <div className={`mc ${cls}`} key={lb}>
-          <div className="mc-ic">{ic}</div>
-          <div className="mc-lbl">{lb}</div>
-          <div className="mc-val" style={{color:val<0&&cls==='mc-saldo'?'var(--red)':'inherit'}}>{brl(val)}</div>
-          <div className="mc-sub">
-            <div className="mc-sub-i"><div className="s-l">{s1}</div><div className="s-v">{brl(v1)}</div></div>
-            {s2&&<div className="mc-sub-i"><div className="s-l">{s2}</div><div className="s-v">{brl(v2)}</div></div>}
-          </div>
-        </div>
-      ))}
-      <div className="mc">
-        <div className="mc-ic">🛡</div>
-        <div className="mc-lbl" style={{color:'var(--green)'}}>Reserva</div>
-        {(()=>{const m=dados.metas.find(x=>x['Nome']?.toLowerCase().includes('reserva'));const at=Number(m?.['Valor_Atual']||2000);const pct=(at/CFG.META_RESERVA)*100;return<><div className="mc-val">{brl(at)}</div><Prog atual={at} meta={CFG.META_RESERVA} cor="var(--green)"/><div style={{fontSize:11,color:'var(--muted)',marginTop:4}}>Meta: {brl(CFG.META_RESERVA)}</div></>})()}
-      </div>
-    </div>
-    <div className="g21">
-      <div className="card">
-        <div style={{padding:'14px 18px 0'}}>
-          <div className="gc-tabs-d">
-            {['Todas','Receitas','Despesas'].map((t,i)=><div key={t} className={`gc-tab-d ${i===2?'on':''}`}>{t}</div>)}
-          </div>
-        </div>
-        <div style={{padding:'0 18px'}}>
-          {ultimos.map((r,i)=>{const cor=catCores[r['Categoria']]||'#94a3b8';return<div className="li-d" key={i}>
-            <div className="li-d-dot" style={{background:cor}}/>
-            <div className="li-d-info">
-              <div className="li-d-nm">{r['Descrição']||'—'}</div>
-              <div className="li-d-mt">{r['Categoria']} · {r['Data']}</div>
-            </div>
-            <span className={`badge ${r['Tipo']==='gasto'?'bg-red':'bg-green'}`}>{r['Tipo']==='gasto'?'Despesa':'Receita'}</span>
-            <div className={`li-d-val ${r['Tipo']==='gasto'?'neg':'pos'}`}>{r['Tipo']==='gasto'?'-':'+'}{brl(r['Valor'])}</div>
-          </div>;})}
-          {ultimos.length===0&&<div className="empty">Nenhum lançamento</div>}
-        </div>
-      </div>
-      <div>
-        <div className="card" style={{marginBottom:14}}>
-          <div className="cp">
-            <div className="ct">Gráficos</div>
-            <div style={{height:180,position:'relative',display:'flex',alignItems:'center',justifyContent:'center'}}>
-              <canvas ref={ref}/>
-              {gastos>0&&<div style={{position:'absolute',textAlign:'center',pointerEvents:'none'}}><div style={{fontSize:15,fontWeight:700,fontFamily:'DM Mono,monospace'}}>{brl(gastos)}</div><div style={{fontSize:10,color:'var(--muted)'}}>Total</div></div>}
-              {!gastos&&<div style={{color:'var(--muted)',fontSize:12}}>Sem gastos</div>}
-            </div>
-            <div style={{marginTop:12}}>
-              {topCats.map(([c,v],i)=><div key={c} style={{display:'flex',alignItems:'center',gap:8,marginBottom:5,fontSize:12}}>
-                <div style={{width:8,height:8,borderRadius:'50%',background:CFG.CORES[i],flexShrink:0}}/>
-                <span style={{flex:1,color:'var(--muted)'}}>{c}</span>
-                <span style={{fontWeight:600,fontFamily:'DM Mono,monospace',fontSize:11}}>{brl(v)}</span>
-              </div>)}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </>;
-}
-
-function DPageOrcamento({dados,mes,setMes}){
-  const{gastos,catTotals}=calcMes(dados,mes);
-  const totalL=Object.values(CFG.LIMITES).reduce((a,b)=>a+b,0);
-  const pctT=totalL>0?(gastos/totalL)*100:0;const corT=CST(pctT);
-  return<>
-    <div className="d-ph">
-      <div><div className="d-pt">Limites de gastos</div><div className="d-ps">Acompanhe no geral ou por categoria</div></div>
-      <div className="mes-nav">
-        <button className="mes-btn" onClick={()=>setMes(MANT(mes))}>‹</button>
-        <div className="mes-lbl">{MLS(mes)}</div>
-        <button className="mes-btn" onClick={()=>setMes(MSEG(mes))}>›</button>
-      </div>
-    </div>
-    <div className="card cp" style={{marginBottom:18}}>
-      <div className="ct">Gastos Por Categoria</div>
-      <div className="gauge-wrap">
-        <GaugeSVG pct={pctT} cor={corT} size={120}/>
-        <div style={{flex:1}}>
-          <div style={{fontSize:12,color:'var(--muted)',marginBottom:8}}>Progresso Do Limite Total</div>
-          <Prog atual={gastos} meta={totalL} cor={corT}/>
-          <div className="gauge-stats">
-            {[['Total gasto',gastos,'var(--red)'],['Limite total',totalL,'var(--text)'],['Restante',totalL-gastos,'var(--green)']].map(([l,v,c])=>(
-              <div className="gs" key={l}><div className="gs-l">{l}</div><div className="gs-v" style={{color:c}}>{brl(v)}</div></div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div className="card cp">
-      <div className="ct">Por categoria</div>
-      {Object.entries(CFG.LIMITES).map(([cat,lim],i)=>{
-        const g=catTotals[cat]||0;const p=lim>0?(g/lim)*100:0;const c=CST(p);
-        return<div className="cat-item" key={cat}>
-          <div className="cat-h">
-            <div className="cat-nm"><div className="cat-dot" style={{background:CFG.CORES[i%CFG.CORES.length]}}/>{cat}</div>
-            <div style={{display:'flex',alignItems:'center',gap:8}}>
-              <span className={`badge ${BCL(p)}`}>{p>=75?BLB(p):'OK'}</span>
-              <div className="cat-vl"><div className="cat-g" style={{color:c}}>{brl(g)}</div><div className="cat-l">de {brl(lim)}</div></div>
-            </div>
-          </div>
-          <Prog atual={g} meta={lim} cor={c}/>
-          <div className="cat-ft"><span style={{color:'var(--muted)'}}>Restante: {brl(Math.max(lim-g,0))}</span><span style={{color:c,fontWeight:600}}>{Math.round(p)}%</span></div>
-        </div>;
-      })}
-    </div>
-  </>;
-}
-
-function DPageMetas({dados}){
-  return<>
-    <div className="d-ph"><div className="d-pt">Metas</div></div>
-    <div className="g3">
-      {dados.metas.map((m,i)=>{
-        const at=Number(m['Valor_Atual']||0);const mt=Number(m['Valor_Meta']||1);
-        const pct=Math.min((at/mt)*100,100);const cor=CFG.CORES[i%CFG.CORES.length];
-        return<div className="card cp" key={i}>
-          <div className="meta-d-h">
-            <div><div className="meta-d-nm">{m['Nome']}</div><span className={`badge bg-gray`} style={{marginTop:4,display:'inline-block'}}>{m['Status']||'Em andamento'}</span></div>
-            <div className="meta-d-pct" style={{color:cor}}>{Math.round(pct)}%</div>
-          </div>
-          <Prog atual={at} meta={mt} cor={cor}/>
-          <div className="meta-d-vls"><span>{brl(at)} guardado</span><span>Meta: {brl(mt)}</span></div>
-        </div>;
-      })}
-      {dados.metas.length===0&&<div className="card cp"><div className="empty">Nenhuma meta.<br/><em>Diga ao bot: "guardei 200 na reserva"</em></div></div>}
-    </div>
-    {(()=>{const m=dados.metas.find(x=>x['Nome']?.toLowerCase().includes('pais'));const pago=Number(m?.['Valor_Atual']||1000);const pct=(pago/CFG.DIVIDA_PAIS)*100;
-    return<div className="card cp" style={{background:'linear-gradient(135deg,#f0fdf4,#dcfce7)',borderColor:'#bbf7d0'}}>
-      <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:14}}>
-        <div><div style={{fontSize:15,fontWeight:700,marginBottom:4}}>👨‍👩‍👧 Dívida com seus pais</div><div style={{fontSize:12,color:'var(--muted)'}}>Previsão de quitação: agosto/2028</div></div>
-        <GaugeSVG pct={pct} cor="var(--green)" size={88}/>
-      </div>
-      <div className="gauge-stats">
-        {[['Pago',pago,'var(--green)'],['Total',CFG.DIVIDA_PAIS,'var(--text)'],['Restante',CFG.DIVIDA_PAIS-pago,'var(--blue)']].map(([l,v,c])=>(
-          <div className="gs" style={{background:'white'}} key={l}><div className="gs-l">{l}</div><div className="gs-v" style={{color:c}}>{brl(v)}</div></div>
-        ))}
-      </div>
-    </div>;})()}
-  </>;
-}
-
-function DPageCartoes({dados,mes}){
-  const{lst,parcelas}=calcMes(dados,mes);
-  return<>
-    <div className="d-ph"><div className="d-pt">Cartões de Crédito</div></div>
-    <div className="g3" style={{marginBottom:18}}>
-      {Object.entries(CFG.CARTOES).map(([k,v])=>{
-        const g=lst.filter(r=>r['Tipo']==='gasto'&&r['Forma_Pagto']?.toLowerCase()===k).reduce((s,r)=>s+Number(r['Valor']||0),0);
-        const dias=DV(v.venc);const ac=dias<=2?'bg-red':dias<=5?'bg-amber':'bg-green';
-        return<div className="cartao-d" key={k}>
-          <div className="cartao-d-h"><div className="cartao-d-ic" style={{background:v.cor+'22'}}>{v.emoji}</div><div><div className="cartao-d-nm">{v.nome}</div><div className="cartao-d-vn">Vence dia {v.venc}</div></div></div>
-          <div className="cartao-d-val" style={{color:g>0?'var(--red)':'var(--muted)'}}>{brl(g)}</div>
-          <div className="cartao-d-ft"><span style={{fontSize:11,color:'var(--muted)'}}>este mês</span><span className={`badge ${ac}`}>{dias===0?'Hoje!':dias<=2?`${dias}d ⚠️`:`${dias}d`}</span></div>
-        </div>;
-      })}
-    </div>
-    <div className="card cp">
-      <div className="ct">Parcelas ativas</div>
-      {dados.parcelas.length===0?<div className="empty">Nenhuma parcela</div>:
-        dados.parcelas.map((p,i)=><div className="par-d" key={i}>
-          <div><div className="par-d-nm">{p['Descrição']}</div><div className="par-d-mt">{p['Parcela_Atual']}/{p['Total_Parcelas']} · {p['Cartão']} · até {p['Encerra_Em']}</div></div>
-          <div className="par-d-val">{brl(p['Valor_Parcela'])}/mês</div>
-        </div>)
-      }
-    </div>
-  </>;
-}
-
-function DPageWishlist({dados}){
-  const pen=dados.wishlist.filter(i=>i['Status']==='Pendente').sort((a,b)=>({alta:0,media:1,baixa:2})[a['Prioridade']?.toLowerCase()||'media']-({alta:0,media:1,baixa:2})[b['Prioridade']?.toLowerCase()||'media']);
-  const com=dados.wishlist.filter(i=>i['Status']!=='Pendente');
-  const total=pen.reduce((s,i)=>s+Number(i['Valor_Est']||0),0);
-  const pc={alta:'#ef4444',media:'#f59e0b',baixa:'#22c55e'};
-  return<>
-    <div className="d-ph"><div className="d-pt">Wishlist</div><div className="d-ps">{pen.length} itens · {brl(total)}</div></div>
-    <div className="g2">
-      <div className="card cp">
-        <div className="ct">🎯 Quero comprar</div>
-        {pen.length===0?<div className="empty">Lista vazia<br/><em>Diga ao bot: "quero comprar airfryer 350"</em></div>:
-          pen.map((item,i)=><div className="wish-d" key={i}>
-            <div className="wish-d-dot" style={{background:pc[item['Prioridade']?.toLowerCase()]||'#94a3b8'}}/>
-            <div className="wish-d-nm">{item['Item']}</div>
-            <span className="badge bg-gray">{item['Prioridade']||'media'}</span>
-            <div className="wish-d-val">{brl(item['Valor_Est'])}</div>
-          </div>)
-        }
-      </div>
-      <div className="card cp">
-        <div className="ct">✅ Já comprei</div>
-        {com.length===0?<div className="empty">Nenhum ainda</div>:
-          com.map((item,i)=><div className="wish-d" key={i} style={{opacity:.5}}>
-            <div className="wish-d-dot" style={{background:'#94a3b8'}}/>
-            <div className="wish-d-nm" style={{textDecoration:'line-through'}}>{item['Item']}</div>
-            <div className="wish-d-val">{brl(item['Valor_Est'])}</div>
-          </div>)
-        }
-      </div>
-    </div>
-  </>;
-}
-
-function DPageScore({dados,mes}){
-  const{gastos,entradas,saldo,lst}=calcMes(dados,mes);
-  const guardou=saldo>=400;const ficouL=gastos<=2300;const temL=lst.length>=5;
-  let nota=5;if(guardou)nota+=2;if(ficouL)nota+=2;if(temL)nota+=1;nota=Math.min(nota,10);
-  const cor=nota>=7?'var(--green)':nota>=5?'var(--amber)':'var(--red)';
-  const emoji=nota>=9?'🏆':nota>=7?'⭐':nota>=5?'👍':'💪';
-  return<>
-    <div className="d-ph"><div className="d-pt">Score Financeiro — {ML(mes)}</div></div>
-    <div className="g2">
-      <div className="card cp" style={{textAlign:'center',padding:'40px 24px'}}>
-        <div className="score-big" style={{color:cor}}>{nota}<span className="score-dez">/10</span></div>
-        <div style={{fontSize:44,marginTop:10}}>{emoji}</div>
-        <div style={{fontSize:13,color:'var(--muted)',marginTop:10}}>{nota>=9?'Excelente! Você está arrasando! 🚀':nota>=7?'Muito bem! Quase perfeita.':nota>=5?'Bom, mas dá pra melhorar!':'Foco no próximo mês!'}</div>
-      </div>
-      <div>
-        <div className="card cp" style={{marginBottom:14}}>
-          <div className="ct">Critérios</div>
-          {[[guardou,'Atingiu a meta de poupança','+2'],[ficouL,'Ficou dentro do limite','+2'],[temL,'Registrou os lançamentos','+1'],[true,'Pontuação base','+5']].map(([ok,l,p],i)=>(
-            <div className="score-ch" key={i}>
-              <span style={{fontSize:16}}>{ok?'✅':'⬜'}</span>
-              <span style={{flex:1}}>{l}</span>
-              <span style={{fontSize:11,fontFamily:'DM Mono,monospace',color:'var(--muted)'}}>{p} pts</span>
-            </div>
-          ))}
-        </div>
-        <div className="card cp">
-          <div className="ct">Resumo</div>
-          {[['Entradas',entradas,'var(--green)'],['Gastos',gastos,'var(--red)'],['Saldo',saldo,saldo>=0?'var(--green)':'var(--red)']].map(([l,v,c])=>(
-            <div key={l} style={{display:'flex',justifyContent:'space-between',padding:'7px 0',borderBottom:'1px solid var(--border)',fontSize:13}}>
-              <span style={{color:'var(--muted)'}}>{l}</span>
-              <span style={{fontWeight:700,fontFamily:'DM Mono,monospace',color:c}}>{brl(v)}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </>;
-}
-
-/* ── DESKTOP APP ────────────────────────────────── */
-const D_PAGES=[
-  {id:'inicio',lb:'Planejar sua grana',ic:'📊'},
-  {id:'orcamento',lb:'Limites de gastos',ic:'🎯'},
-  {id:'metas',lb:'Metas',ic:'⭐'},
-  {id:'cartoes',lb:'Cartões de crédito',ic:'💳'},
-  {id:'wishlist',lb:'Wishlist',ic:'🛍'},
-  {id:'score',lb:'Score',ic:'🏅'},
+const MENU_DEFAULTS=[
+ {id:'inicio',icone:'🏠',nome:'Visão geral'},
+ {id:'lancamentos',icone:'⊞',nome:'Lançamentos'},
+ {id:'orcamento',icone:'📊',nome:'Orçamento'},
+ {id:'metas',icone:'🎯',nome:'Metas'},
+ {id:'cartoes',icone:'💳',nome:'Cartões'},
+ {id:'contas',icone:'🏦',nome:'Contas'},
+ {id:'wishlist',icone:'♡',nome:'Listas de compras'},
+ {id:'relatorios',icone:'📈',nome:'Relatórios'},
+ {id:'dividas',icone:'💸',nome:'Dívidas'},
+ {id:'config',icone:'⚙️',nome:'Configurações'}
 ];
-const D_TOPBAR={inicio:['Planejar sua grana','Relatórios'],orcamento:['Geral','Por categoria'],metas:['Metas'],cartoes:['Meus cartões','Parcelas'],wishlist:['Pendentes','Comprados'],score:['Score']};
-
-function DesktopApp({dados,onLogout}){
-  const[tela,setTela]=useState('inicio');
-  const[mes,setMes]=useState(MA());
-  const p={dados,mes,setMes};
-  const renderTela=()=>{
-    switch(tela){
-      case 'inicio':return<DPageInicio {...p}/>;
-      case 'orcamento':return<DPageOrcamento {...p}/>;
-      case 'metas':return<DPageMetas {...p}/>;
-      case 'cartoes':return<DPageCartoes {...p}/>;
-      case 'wishlist':return<DPageWishlist {...p}/>;
-      case 'score':return<DPageScore {...p}/>;
-      default:return<DPageInicio {...p}/>;
-    }
-  };
-  return<div className="d-layout">
-    <aside className="d-sidebar">
-      <div className="d-sidebar-logo"><div className="d-logo-ic">💚</div><div className="d-logo-txt">BiFinanças</div></div>
-      <nav className="d-nav">
-        {D_PAGES.map(p=><div key={p.id} className={`d-nav-item ${tela===p.id?'on':''}`} onClick={()=>setTela(p.id)}><span className="d-nav-ic">{p.ic}</span>{p.lb}</div>)}
-      </nav>
-      <div className="d-sidebar-ft">
-        <div style={{fontSize:11,color:'rgba(255,255,255,.4)',textAlign:'center',marginBottom:8}}>{ML(mes)}</div>
-        <button className="d-logout" onClick={onLogout}>Sair</button>
-      </div>
-    </aside>
-    <div className="d-main">
-      <div className="d-topbar">
-        {(D_TOPBAR[tela]||[]).map((l,i)=><div key={l} className={`d-tl ${i===0?'on':''}`}>{l}</div>)}
-        <div className="d-tl-r"><div className="d-av">B</div></div>
-      </div>
-      <div className="d-page">{renderTela()}</div>
-    </div>
-  </div>;
+const getMenuItems=()=>MENU_DEFAULTS.map(m=>({id:m.id,icone:localStorage.getItem('bf-menu-icone-'+m.id)||m.icone,nome:localStorage.getItem('bf-menu-nome-'+m.id)||m.nome}));
+const resetMenuItems=()=>{MENU_DEFAULTS.forEach(m=>{localStorage.removeItem('bf-menu-icone-'+m.id);localStorage.removeItem('bf-menu-nome-'+m.id)})};
+function Header({mes,setMes,tela,setTela,menuVersion}){const items=getMenuItems();const labels=Object.fromEntries(items.map(i=>[i.id,i.nome]));return <><div className="top"><div><h1 className="title">{labels[tela]}</h1><p className="subtitle">Acompanhe sua saúde financeira em um só lugar</p></div><div className="top-actions"><div className="month-pill"><button onClick={()=>setMes(mprev(mes))}>‹</button>{mlong(mes)}<button onClick={()=>setMes(mnext(mes))}>›</button></div><button className="icon-btn" onClick={()=>setTela('config')}>🔔</button><div className="user-pill"><div className="avatar">B</div>Bianca⌄</div></div></div><div className="tabs">{items.map(i=><button className={`tab ${tela===i.id?'on':''}`} onClick={()=>setTela(i.id)} key={i.id}>{i.nome}</button>)}</div></>}
+function Doughnut({items,total}){return <div className="chart-wrap"><div className="donut"></div><div className="chart-center"><strong>{brl(total)}</strong><span>Total</span></div></div>}
+function LineChart(){return <div className="line-demo"><svg preserveAspectRatio="none" viewBox="0 0 500 200"><path d="M0,170 C60,145 100,120 150,95 C200,70 230,20 270,95 C310,160 340,70 390,35 C430,16 470,22 500,18" fill="none" stroke="#22c55e" strokeWidth="4"/><path d="M0,170 C60,145 100,120 150,95 C200,70 230,20 270,95 C310,160 340,70 390,35 C430,16 470,22 500,18 L500,200 L0,200 Z" fill="rgba(34,197,94,.12)"/></svg></div>}
+function Tx({r}){const gasto=(r.Tipo||r['Tipo'])==='gasto';return <div className="tx-row"><div className="tx-ic">{gasto?'🛒':'💵'}</div><div><div className="tx-name">{r.Descrição||r['Descrição']||'—'}</div><div className="tx-cat">{r.Categoria||r['Categoria']||'Outros'}</div></div><div className="tx-date">{r.Data||r['Data']||''}</div><div className={`tx-value ${gasto?'red':'green'}`}>{gasto?'- ':'+ '}{brl(r.Valor||r['Valor'])}</div></div>}
+function IconView({value,label}){
+  const v=String(value||'').trim();
+  if(/^https?:\/\//i.test(v)){
+    return <img src={v} alt={label||'ícone'} style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:'inherit'}} onError={e=>{e.currentTarget.style.display='none';}}/>;
+  }
+  return <span>{v || (label||'?').slice(0,2).toUpperCase()}</span>;
 }
 
-/* ════════════════════════════════════════
-   MOBILE PAGES
-════════════════════════════════════════ */
-function MPageInicio({dados,mes}){
-  const{gastos,entradas,saldo,catCores,topCats,grupos}=calcMes(dados,mes);
-  const ref=useRef();
-  useEffect(()=>{
-    if(!ref.current)return;
-    const ex=Chart.getChart(ref.current);if(ex)ex.destroy();
-    if(!topCats.length)return;
-    new Chart(ref.current,{type:'doughnut',data:{labels:topCats.map(x=>x[0]),datasets:[{data:topCats.map(x=>x[1]),backgroundColor:CFG.CORES,borderWidth:0,hoverOffset:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'70%'}});
-  },[dados,mes]);
-  return<div className="m-content">
-    <div style={{padding:'0 12px',marginTop:-6,position:'relative',zIndex:5}}>
-      <div className="m-saldo">
-        <div className="m-sl">💰 Saldo atual</div>
-        <div className="m-sv" style={{color:saldo<0?'var(--red)':'var(--text)'}}>{brl(saldo)}</div>
-        <div className="m-sg">
-          {[{ic:'📈',bg:'#dcfce7',l:'Receita',v:entradas,c:'#166534'},{ic:'📉',bg:'#fee2e2',l:'Despesas',v:gastos,c:'#991b1b'},{ic:'✅',bg:'#dcfce7',l:'Recebido',v:entradas,c:'#166534'},{ic:'⏳',bg:'#fef3c7',l:'Pago',v:gastos,c:'#92400e'},{ic:'🔜',bg:'#dbeafe',l:'A receber',v:0,c:'#1d4ed8'},{ic:'🔴',bg:'#fee2e2',l:'A pagar',v:0,c:'#991b1b'}].map(({ic,bg,l,v,c})=>(
-            <div className="m-si" key={l}><div className="m-si-ic" style={{background:bg}}>{ic}</div><div><div className="m-si-l">{l}</div><div className="m-si-v" style={{color:c}}>{brl(v)}</div></div></div>
-          ))}
+function Inicio({dados,mes,setTela}){const c=calcMes(dados,mes);const reserva=reservaAtual(dados);const fat=faturasTotal(dados,mes);const top=c.topCats.length?c.topCats:[['Alimentação',520],['Transporte',260],['Moradia',230],['Lazer',180],['Saúde',130],['Outros',120]];const total=c.gastos||1480;const totalLim=Object.values(CFG.LIMITES).reduce((a,b)=>a+b,0);const used=(c.gastos||1496)/totalLim*100;return <><div className="kpis"><KPI label="Receitas" value={brl(c.entradas||2450)} icon="💵" color="green" sub={[["Recebido",brl(c.entradas||2450)],["A receber",brl(0)]]}/><KPI label="Despesas" value={brl(c.gastos||1480)} icon="💳" color="red" sub={[["Pago",brl(c.gastos||1480)],["A pagar",brl(0)]]}/><KPI label="Saldo do mês" value={brl(c.saldo||970)} icon="⭐" color="blue" sub={[["Previsto",brl(1000)]]}/><KPI label="Reserva de emergência" value={brl(reserva)} icon="🛡" color="green" progress={reserva/CFG.META_RESERVA*100} sub={[["Meta",brl(CFG.META_RESERVA)],["Progresso",`${Math.round(reserva/CFG.META_RESERVA*100)}%`]]}/><KPI label="Faturas dos cartões" value={brl(fat||170)} icon="💳" color="purple" sub={[["Próximo vencimento","05/06"],["Cartões","5 cartões"]]}/><KPI label="Dívida do carro" value={brl(CFG.CARRO_FALTA)} icon="🚙" color="blue" sub={[["Pago",brl(CFG.CARRO_PAGO)],["Falta",brl(CFG.CARRO_FALTA)]]}/></div><div className="grid-main"><div className="card section-card"><div className="card-title">Gastos por categoria <button className="select-chip">Este mês⌄</button></div><Doughnut items={top} total={total}/><div className="legend">{top.map(([n,v],i)=><div className="legend-row" key={n}><span className="dot" style={{background:CFG.CORES[i]}}/><span>{n}</span><b>{brl(v)}</b><span className="muted">{Math.round(v/total*100)}%</span></div>)}</div></div><div className="card section-card"><div className="card-title">Evolução do saldo <button className="select-chip">Últimos 6 meses⌄</button></div><LineChart/></div><div className="card section-card"><div className="card-title">Orçamento do mês <button className="select-chip" onClick={()=>setTela('orcamento')}>Ver detalhes ›</button></div><div className="budget-list">{Object.entries(CFG.LIMITES).slice(0,5).map(([n,lim],i)=>{const val=c.catTotals[n]||[520,260,180,130,120][i]||0;const p=val/lim*100;return <div className="budget-row" key={n}><div className="sq">{['🍴','🚌','🎬','💊','◌'][i]}</div><div><div className="budget-name">{n.split('/')[0]}</div><div className="budget-bar"><span style={{width:`${Math.min(100,p)}%`}}/></div></div><div className="budget-money">{brl(val)} de {brl(lim)}<br/><b>{Math.round(p)}%</b></div></div>})}</div></div></div><div className="grid-bottom"><div className="card section-card"><div className="card-title">Últimas transações <button className="select-chip" onClick={()=>setTela('lancamentos')}>Ver todas</button></div><div className="transactions">{(c.lst.length?c.lst:demoData().lancamentos).slice(0,5).map((r,i)=><Tx r={r} key={i}/>)}</div></div><div className="card section-card"><div className="card-title">Orçamento do mês</div><div className="budget-summary"><div className="big-ring" style={{background:`conic-gradient(var(--green) 0 ${Math.min(100,used||73)}%,#eef2f7 ${Math.min(100,used||73)}%)`}}><div className="big-ring-inner"><div><strong>{Math.round(used||73)}%</strong><br/><span className="muted">Utilizado</span></div></div></div><div className="summary-lines"><div className="summary-line"><span>Orçamento total</span><b>{brl(totalLim)}</b></div><div className="summary-line"><span>Total utilizado</span><b>{brl(c.gastos||1496)}</b></div><div className="summary-line"><span>Disponível</span><b className="green">{brl(Math.max(totalLim-c.gastos,554))}</b></div></div></div><div className="tip">💡 Você ainda tem {brl(Math.max(totalLim-c.gastos,554))} disponível para usar até o fim do mês.</div></div></div></>}
+function PageLancamentos({dados,mes}){const c=calcMes(dados,mes);return <div className="card section-card"><div className="card-title">Lançamentos do mês</div>{(c.lst.length?c.lst:demoData().lancamentos).map((r,i)=><Tx r={r} key={i}/>)}</div>}
+function PageOrcamento({dados,mes}){const c=calcMes(dados,mes);const[edit,setEdit]=useState(null);const[items,setItems]=useState(Object.entries(CFG.LIMITES).map(([nome,limite],i)=>({nome,limite,icone:['🍽️','🛒','⛽','🎬','💄','🔁','💊'][i]||'📌'})));const totalUsado=items.reduce((s,it)=>s+(c.catTotals[it.nome]||0),0);const limiteTotal=items.reduce((s,it)=>s+(Number(it.limite)||0),0);const disponivel=limiteTotal-totalUsado;return <div className="budget-page-clean"><section className="card section-card budget-clean-section"><div className="budget-clean-head"><div><h2>Resumo do orçamento</h2><p>Total utilizado no mês</p></div><button className="primary-action" onClick={()=>setEdit({nome:'',limite:'',icone:'📌'})}>+ Categoria</button></div><div className="budget-summary-cards"><div className="budget-summary-card"><span>Total utilizado</span><strong>{brl(totalUsado)}</strong></div><div className="budget-summary-card"><span>Limite total</span><strong>{brl(limiteTotal)}</strong></div><div className="budget-summary-card available"><span>Disponível</span><strong>{brl(disponivel)}</strong></div></div></section><section className="card section-card budget-clean-section"><div className="budget-clean-title">Categorias</div><div className="budget-clean-list">{items.map((it,i)=>{const val=c.catTotals[it.nome]||0;const lim=Number(it.limite)||0;const pct=lim?Math.min(100,val/lim*100):0;return <div className="budget-clean-row" key={it.nome||i}><div className="budget-clean-icon">{it.icone||'📌'}</div><div className="budget-clean-main"><div className="budget-clean-row-top"><strong>{it.nome||'Nova categoria'}</strong><span><b>{brl(val)}</b> de {brl(lim)}</span></div><div className="budget-clean-bar"><i style={{width:`${pct}%`}}></i></div><small>{Math.round(pct)}% usado</small></div><button className="edit-pencil budget-pencil" title="Editar categoria" onClick={()=>setEdit({...it,index:i})}>✎</button></div>})}</div></section>{edit&&<div className="edit-modal-backdrop" onClick={()=>setEdit(null)}><div className="edit-modal" onClick={e=>e.stopPropagation()}><h3>{edit.index>=0?'Editar categoria':'Nova categoria'}</h3><div className="edit-grid"><div className="edit-field"><label>Nome da categoria</label><input id="cat-nome" defaultValue={edit.nome}/></div><div className="edit-field"><label>Limite mensal</label><input id="cat-limite" defaultValue={edit.limite} placeholder="Ex: 600"/></div><div className="edit-field"><label>Ícone</label><input id="cat-icone" defaultValue={edit.icone||''} placeholder="Ex: 🛒 ou link de imagem"/></div><div className="edit-field"><label>Cor</label><input placeholder="#22c55e"/></div></div><div className="modal-small-note">A edição já funciona visualmente nesta tela. Na etapa do Apps Script, esses dados serão gravados na aba Orçamento.</div><div className="edit-actions"><button className="soft-btn" onClick={()=>setEdit(null)}>Cancelar</button>{edit.index>=0&&<button className="form-danger" onClick={()=>{setItems(prev=>prev.filter((_,j)=>j!==edit.index));setEdit(null)}}>Excluir</button>}<button className="form-save" onClick={()=>{const nome=document.getElementById('cat-nome').value||'Nova categoria';const limite=Number((document.getElementById('cat-limite').value||'0').replace(',','.'));const icone=document.getElementById('cat-icone').value||'📌';setItems(prev=>edit.index>=0?prev.map((x,j)=>j===edit.index?{nome,limite,icone}:x):[...prev,{nome,limite,icone}]);setEdit(null)}}>Salvar</button></div></div></div>}</div>}function PageMetas({dados}){
+const moneyArt='data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240"><rect width="400" height="240" rx="28" fill="#eaf7ea"/><g opacity="0.95"><path d="M54 144 192 56l154 88-138 80z" fill="#7ee45d"/><path d="M54 144v30l154 88v-38z" fill="#5ed449"/><path d="M346 144v30l-138 80v-38z" fill="#69da52"/><ellipse cx="174" cy="140" rx="46" ry="26" fill="#56c947"/><circle cx="174" cy="140" r="18" fill="#79ea62"/><text x="174" y="147" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#fff">$</text><ellipse cx="244" cy="104" rx="20" ry="12" fill="#6fd95a"/></g></svg>`);
+const initial=(dados.metas.length?dados.metas:demoData().metas).map(m=>({Nome:m.Nome,Icone:m.Icone||'',Valor_Atual:moneyNum(m.Valor_Atual),Valor_Meta:moneyNum(m.Valor_Meta),Status:m.Status||'Em andamento',Prazo:m.Prazo||'',Imagem:m.Imagem||m.Imagem_URL||'',Observacao:m.Observacao||''}));
+const[metas,setMetas]=useState(initial);
+const[edit,setEdit]=useState(null);
+const openNew=()=>setEdit({Nome:'',Icone:'',Valor_Atual:'',Valor_Meta:'',Prazo:'',Status:'Em andamento',Imagem:'',Observacao:''});
+const openEdit=(m,i)=>setEdit({...m,index:i});
+const salvar=()=>{
+ const novo={
+  Nome:document.getElementById('meta-nome').value||'Nova meta',
+  Icone:document.getElementById('meta-icone').value||'',
+  Valor_Atual:Number((document.getElementById('meta-atual').value||'0').replace(',','.')),
+  Valor_Meta:Number((document.getElementById('meta-total').value||'0').replace(',','.')),
+  Prazo:document.getElementById('meta-prazo').value||'',
+  Status:document.getElementById('meta-status').value||'Em andamento',
+  Imagem:document.getElementById('meta-img-link').value||'',
+  Observacao:document.getElementById('meta-obs').value||''
+ };
+ setMetas(prev=>edit.index>=0?prev.map((x,j)=>j===edit.index?novo:x):[novo,...prev]);
+ setEdit(null);
+};
+return <div className="goals-page">
+ <div className="goals-head">
+  <div><h2>Minhas metas</h2><p>Objetivos com imagem, valor e prazo</p></div>
+  <button className="primary-action" onClick={openNew}>+ Meta</button>
+ </div>
+ <div className="goals-grid">{metas.map((m,i)=>{const at=moneyNum(m.Valor_Atual), mt=moneyNum(m.Valor_Meta)||1, pct=Math.min(100,at/mt*100); return <div className="goal-card" key={i}>
+    <button className="edit-pencil goal-edit" title="Editar meta" onClick={()=>openEdit(m,i)}>✎</button>
+    <div className="goal-media">{m.Imagem?<img src={m.Imagem} alt={m.Nome}/>:<div className="goal-placeholder"><img src={moneyArt} alt="Ilustração da meta" style={{width:'100%',height:'100%',objectFit:'cover'}}/></div>}</div>
+    <div className="goal-body">
+      <div className="goal-name">{m.Nome}</div>
+      <div className="goal-meta">Prazo: {m.Prazo||'Sem prazo'} · {m.Status||'Em andamento'}</div>
+      <div className="goal-amount">{brl(at)}</div>
+      <div className="goal-bar"><i style={{width:`${pct}%`}}></i></div>
+      <div className="goal-foot">Meta: <b>{brl(mt)}</b> · {Math.round(pct)}%</div>
+    </div>
+  </div>})}</div>
+ {edit&&<div className="edit-modal-backdrop" onClick={()=>setEdit(null)}><div className="edit-modal goal-modal" onClick={e=>e.stopPropagation()} style={{position:'relative'}}>
+    <button className="goal-close-x" onClick={()=>setEdit(null)}>×</button>
+    <h3>{edit.index>=0?'Editar meta':'Nova meta'}</h3>
+    <div className="edit-grid">
+      <div className="edit-field"><label>NOME</label><input id="meta-nome" defaultValue={edit.Nome||''}/></div>
+      <div className="edit-field"><label>ÍCONE</label><input id="meta-icone" defaultValue={edit.Icone||''}/></div>
+      <div className="edit-field"><label>VALOR ATUAL</label><input id="meta-atual" defaultValue={edit.Valor_Atual||''}/></div>
+      <div className="edit-field"><label>VALOR ALVO</label><input id="meta-total" defaultValue={edit.Valor_Meta||''}/></div>
+      <div className="edit-field"><label>PRAZO</label><input id="meta-prazo" defaultValue={edit.Prazo||''}/></div>
+      <div className="edit-field"><label>STATUS</label><select id="meta-status" className="goal-status" defaultValue={edit.Status||'Em andamento'}><option>Em andamento</option><option>Pausada</option><option>Concluída</option></select></div>
+      <div className="edit-field goal-dropzone"><label>IMAGEM DA META</label><div className="goal-drop">Cole o link ou anexe uma imagem<small>Use uma foto da viagem, da casa, do curso ou do objetivo</small></div></div>
+      <div className="edit-field goal-url"><input id="meta-img-link" defaultValue={edit.Imagem||''} placeholder="https://..."/></div>
+      <div className="edit-field goal-file"><input type="file" accept="image/*"/></div>
+      <div className="edit-field goal-obs"><label>OBSERVAÇÃO</label><textarea id="meta-obs" defaultValue={edit.Observacao||''}></textarea></div>
+    </div>
+    <div className="edit-actions"><button className="soft-btn" onClick={()=>setEdit(null)}>Fechar</button><button className="form-save" onClick={salvar}>Salvar nesta sessão</button></div>
+  </div></div>}
+</div>}
+function PageCartoes({dados,mes}){const[sel,setSel]=useState('nubank');const[editCard,setEditCard]=useState(null);const tx=faturaCartao(dados,mes,sel);const parcelas=(dados.parcelas.length?dados.parcelas:demoData().parcelas);const card=CFG.CARTOES[sel];const total=tx.reduce((s,r)=>s+moneyNum(r.Valor),0);return <><div className="kpis">{Object.entries(CFG.CARTOES).map(([k,v])=>{const t=faturaCartao(dados,mes,k).reduce((s,r)=>s+moneyNum(r.Valor),0);return <button className={`card kpi click-card ${sel===k?'on':''}`} onClick={()=>setSel(k)} key={k}><span className="edit-pencil" title="Editar cartão" onClick={(e)=>{e.stopPropagation();setEditCard({key:k,...v})}}>✎</span><div className="kpi-head"><div className="kpi-label"><span>↗</span>{v.nome}</div><div className="mini-ic" style={{background:v.cor+'22',color:v.cor}}><IconView value={v.emoji} label={v.nome}/></div></div><div className="kpi-value purple">{brl(t)}</div><div className="kpi-grid"><div><div className="kpi-sm-label">Vence dia</div><div className="kpi-sm-value">{v.venc}</div></div><div><div className="kpi-sm-label">Gasto mês</div><div className="kpi-sm-value">{brl(t)}</div></div></div></button>})}</div><div className="card-split"><div className="card section-card"><div className="card-title">Resumo da fatura — {card.nome}</div><div className="summary-lines"><div className="summary-line"><span>Total da fatura no mês</span><b className="purple">{brl(total)}</b></div><div className="summary-line"><span>Vencimento</span><b>Dia {card.venc}</b></div><div className="summary-line"><span>Quantidade de lançamentos</span><b>{tx.length}</b></div></div><div className="tip">Ao clicar em um cartão, este resumo muda para a fatura daquele mês.</div></div><div className="card section-card"><div className="card-title">Lançamentos da fatura</div>{tx.length?tx.map((r,i)=><Tx r={r} key={i}/>):<div className="muted">Nenhum lançamento nesse cartão no mês selecionado.</div>}</div></div><div className="card section-card" style={{marginTop:16}}><div className="card-title">Parcelas dentro dos cartões</div><div className="table-wrap"><table className="table"><thead><tr><th>Descrição</th><th>Cartão</th><th>Parcela</th><th>Valor</th><th>Total</th><th>Encerramento</th><th>Situação</th><th></th></tr></thead><tbody>{parcelas.map((p,i)=><tr key={i}><td><b>{p.Descrição}</b></td><td>{p.Cartão}</td><td>{p.Parcela_Atual}/{p.Total_Parcelas}</td><td>{brl(p.Valor_Parcela)}</td><td>{brl(p.Valor_Total)}</td><td>{p.Encerra_Em}</td><td><span className="status">Em andamento</span></td><td className="ellipsis">⋮</td></tr>)}</tbody></table></div></div>{editCard&&<div className="edit-modal-backdrop" onClick={()=>setEditCard(null)}><div className="edit-modal" onClick={e=>e.stopPropagation()}><h3>Editar cartão</h3><div className="edit-grid"><div className="edit-field"><label>Nome</label><input defaultValue={editCard.nome}/></div><div className="edit-field"><label>Link da imagem do ícone</label><input defaultValue={editCard.emoji} placeholder="Cole o link da imagem do ícone"/></div><div className="edit-field"><label>Anexar imagem do ícone</label><input type="file" accept="image/*"/><div className="file-note">Use quando quiser escolher uma imagem do computador. Depois salvaremos isso no Sheets.</div></div><div className="edit-field"><label>Cor</label><input defaultValue={editCard.cor}/></div><div className="edit-field"><label>Vencimento</label><input defaultValue={editCard.venc}/></div></div><div className="tip" style={{marginTop:12}}>Essa edição é visual por enquanto. Depois ligamos ao Google Sheets para salvar o link/anexo da imagem do ícone, cor, nome e vencimento.</div><div className="edit-actions"><button className="soft-btn" onClick={()=>setEditCard(null)}>Fechar</button></div></div></div>}</>}function PageWishlist({dados}){
+const [tab,setTab]=useState('wishlist');
+const [edit,setEdit]=useState(null);
+const [base,setBase]=useState(dados.wishlist.length?dados.wishlist:[
+ {Item:'Airfryer',Valor_Est:350,Status:'Pendente',Lista:'wishlist',Loja:'',Link:'',Observação:'',Imagem:'',ParaQuem:''},
+ {Item:'Vela aromática cereja e avelã',Valor_Est:49.90,Status:'Juntando dinheiro',Lista:'gift',Loja:'Shopee',Link:'',Observação:'Ideia de presente',Imagem:'',ParaQuem:'Mãe'},
+ {Item:'Organizador de armário',Valor_Est:29.90,Status:'Pendente',Lista:'geral',Loja:'Shopee',Link:'',Observação:'',Imagem:'',ParaQuem:''},
+ {Item:'Arroz',Unidades:1,Comprado:false,Lista:'mercado'},
+ {Item:'Leite',Unidades:2,Comprado:false,Lista:'mercado'},
+ {Item:'Café',Unidades:1,Comprado:true,Lista:'mercado'}
+]);
+const nrm=s=>(s||'').toString().toLowerCase();
+const tipoLista=i=>{const raw=nrm(i.Lista||i.Tipo_Lista||i.Categoria_Lista||i.Tipo||'wishlist');if(raw.includes('gift')||raw.includes('presente'))return 'gift';if(raw.includes('mercado'))return 'mercado';if(raw.includes('geral')||raw.includes('general'))return 'geral';if(raw.includes('shopping'))return 'mercado';return 'wishlist'};
+const filtrada=base.filter(i=>tab==='todos'||tipoLista(i)===tab);
+const totals={wishlist:base.filter(i=>tipoLista(i)==='wishlist').length,gift:base.filter(i=>tipoLista(i)==='gift').length,geral:base.filter(i=>tipoLista(i)==='geral').length,mercado:base.filter(i=>tipoLista(i)==='mercado').length};
+const emoji=i=>{const n=nrm(i.Item);if(n.includes('air'))return'🍟';if(n.includes('café')||n.includes('cafete'))return'☕';if(n.includes('tênis')||n.includes('tenis'))return'👟';if(n.includes('colar')||n.includes('brinco'))return'💎';if(n.includes('roupa')||n.includes('blusa'))return'👚';if(n.includes('lumin')||n.includes('vela')||n.includes('presente'))return'🎁';if(n.includes('organiz')||n.includes('cesto'))return'🧺';return'🛍️'};
+const statusClass=s=>{const n=nrm(s);if(n.includes('compr')||n.includes('ganhei'))return'tag-green';if(n.includes('preciso')||n.includes('já'))return'tag-pink';if(n.includes('junt'))return'tag-gold';if(n.includes('desist'))return'tag-red';return'tag-blue'};
+const listaLabel={wishlist:'Listas de compras',gift:'Gift list',geral:'Lista de compras geral',mercado:'Lista de mercado'};
+const listaDesc={wishlist:'Coisas que você quer comprar, mas sem data definida',gift:'Ideias de presente para outras pessoas',geral:'Itens que você precisa comprar no geral, sem ser mercado',mercado:'Lista de mercado com item, unidades e marcação do que já foi comprado'};
+const novo=()=>setEdit(tab==='mercado'?{Item:'',Unidades:1,Comprado:false,Lista:'mercado'}:{Item:'',Valor_Est:'',Status:'Pendente',Lista:(tab==='todos'||tab==='mercado')?'wishlist':tab,Loja:'',Link:'',Observação:'',Imagem:'',ParaQuem:''});
+const salvarWish=()=>{
+ const item={Item:document.getElementById('wish-item').value||'Novo item',Valor_Est:Number((document.getElementById('wish-valor').value||'0').replace(',','.')),Lista:document.getElementById('wish-lista').value,ParaQuem:document.getElementById('wish-para').value,Status:document.getElementById('wish-status').value,Loja:document.getElementById('wish-loja').value,Link:document.getElementById('wish-link').value,Imagem:document.getElementById('wish-img').value,Observação:document.getElementById('wish-obs').value};
+ setBase(prev=>edit.index>=0?prev.map((x,j)=>j===edit.index?item:x):[item,...prev]); setEdit(null);
+};
+const salvarMarket=()=>{
+ const item={Item:document.getElementById('market-item').value||'Novo item',Unidades:Number((document.getElementById('market-unidades').value||'1').replace(',','.')),Comprado:document.getElementById('market-comprado').checked,Lista:'mercado'};
+ setBase(prev=>edit.index>=0?prev.map((x,j)=>j===edit.index?item:x):[item,...prev]); setEdit(null);
+};
+return <>
+<div className="wish-tabs"><button className={`wish-tab ${tab==='wishlist'?'on':''}`} onClick={()=>setTab('wishlist')}>♡ Wishlist <span className="tab-count">{totals.wishlist}</span></button><button className={`wish-tab ${tab==='gift'?'on':''}`} onClick={()=>setTab('gift')}>🎁 Gift list <span className="tab-count">{totals.gift}</span></button><button className={`wish-tab ${tab==='geral'?'on':''}`} onClick={()=>setTab('geral')}>🧾 Lista geral <span className="tab-count">{totals.geral}</span></button><button className={`wish-tab ${tab==='mercado'?'on':''}`} onClick={()=>setTab('mercado')}>🛒 Mercado <span className="tab-count">{totals.mercado}</span></button><button className={`wish-tab ${tab==='todos'?'on':''}`} onClick={()=>setTab('todos')}>▦ Todas</button></div>
+<div className="wish-section-head"><div><h2>{tab==='todos'?'Todas as listas':listaLabel[tab]}</h2><p>{tab==='todos'?'Visão geral de todos os itens cadastrados':listaDesc[tab]}</p></div><button className="mini-add inline-add" title="Novo item" onClick={novo}>＋</button></div>
+{tab==='mercado'?
+  <div className="shopping-list-wrap">
+    <div className="market-add-row"><button className="mini-add" onClick={()=>setEdit({Item:'',Unidades:1,Comprado:false,Lista:'mercado'})}>＋</button></div>
+    <div className="market-list">{filtrada.length?filtrada.map((i,k)=><div className="market-row" key={k}><input className="market-check" type="checkbox" checked={!!i.Comprado} onChange={e=>setBase(prev=>prev.map((x,j)=>j===base.indexOf(i)?{...x,Comprado:e.target.checked}:x))}/><div className={`market-item ${i.Comprado?'done':''}`}>{i.Item||'Novo item'}</div><div className="market-unit">{i.Unidades||1} un.</div><button className="icon-only" title="Editar" onClick={()=>setEdit({...i,index:base.indexOf(i)})}>✎</button></div>):<div className="market-empty">Sua lista de mercado está vazia. Clique em <b>＋</b> para adicionar produtos.</div>}</div>
+  </div>
+  :<div className="wish-board">{filtrada.map((i,k)=><div className="wish-card" key={k}><button className="wish-edit-mini" title="Editar" onClick={()=>setEdit({...i,index:base.indexOf(i)})}>✎</button><div className="wish-cover">{i.Imagem?<img src={i.Imagem}/>:<div className="wish-placeholder"><span>{emoji(i)}</span><small>Adicionar imagem</small></div>}</div><div className="wish-body"><div className="wish-name">{i.Item||'Novo item'}</div><div className="wish-price">{brl(i.Valor_Est||0)}</div><div className="wish-meta"><span className={`tag ${statusClass(i.Status)}`}>● {i.Status||'Pendente'}</span></div>{tipoLista(i)==='gift'&&(i.ParaQuem||i['Para quem'])&&<div className="wish-foot">🎁 Para: {i.ParaQuem||i['Para quem']}</div>}{i.Loja&&<div className="wish-foot">🏪 {i.Loja}</div>}{i.Link?<a className="wish-link clickable" href={i.Link} target="_blank" rel="noreferrer">🔗 {String(i.Link).replace(/^https?:\/\//,'')}</a>:<div className="wish-link muted">🔗 Sem link cadastrado</div>}</div></div>)}</div>}
+{edit&&tipoLista(edit)==='mercado'&&<div className="edit-modal-backdrop" onClick={()=>setEdit(null)}><div className="edit-modal market-modal" onClick={e=>e.stopPropagation()} style={{position:'relative'}}><button className="modal-x" onClick={()=>setEdit(null)}>×</button><h3>{edit.index>=0?'Editar item de mercado':'Novo item de mercado'}</h3><div className="edit-grid"><div className="edit-field"><label>ITEM</label><input id="market-item" defaultValue={edit.Item||''}/></div><div className="edit-field"><label>UNIDADES</label><input id="market-unidades" defaultValue={edit.Unidades||1}/></div><div className="edit-field"><label>COMPRADO?</label><div style={{display:'flex',alignItems:'center',gap:10,height:48,padding:'0 14px',border:'1px solid var(--line)',borderRadius:14}}><input id="market-comprado" type="checkbox" defaultChecked={!!edit.Comprado}/><span>Marcar como comprado</span></div></div></div><div className="edit-actions"><button className="soft-btn" onClick={()=>setEdit(null)}>Fechar</button>{edit.index>=0&&<button className="form-danger" onClick={()=>{setBase(prev=>prev.filter((_,j)=>j!==edit.index));setEdit(null)}}>Excluir</button>}<button className="form-save" onClick={salvarMarket}>Salvar nesta sessão</button></div></div></div>}
+{edit&&tipoLista(edit)!=='mercado'&&<div className="edit-modal-backdrop" onClick={()=>setEdit(null)}><div className="edit-modal wishlist-modal" onClick={e=>e.stopPropagation()} style={{position:'relative'}}><button className="modal-x" onClick={()=>setEdit(null)}>×</button><h3>{edit.index>=0?'Editar item':'Novo item'}</h3><div className="edit-grid"><div className="edit-field"><label>ITEM</label><input id="wish-item" defaultValue={edit.Item||''}/></div><div className="edit-field"><label>VALOR</label><input id="wish-valor" defaultValue={edit.Valor_Est||''}/></div><div className="edit-field"><label>LISTA</label><select id="wish-lista" defaultValue={tipoLista(edit)}><option value="wishlist">Wishlist</option><option value="gift">Gift list</option><option value="geral">Lista de compras geral</option></select></div><div className="edit-field"><label>STATUS</label><select id="wish-status" defaultValue={edit.Status||'Pendente'}><option>Pendente</option><option>Esperando</option><option>Juntando dinheiro</option><option>Comprar</option><option>Preciso já</option><option>Comprei</option><option>Desisti</option></select></div><div className="edit-field"><label>PARA QUEM (GIFT LIST)</label><input id="wish-para" defaultValue={edit.ParaQuem||edit['Para quem']||''}/></div><div className="edit-field"><label>LOJA</label><input id="wish-loja" defaultValue={edit.Loja||''}/></div><div className="edit-field"><label>LINK</label><input id="wish-link" defaultValue={edit.Link||''}/></div><div className="edit-field wish-image-drop" style={{gridColumn:'1/-1'}}><label>IMAGEM DO ITEM</label><div className="wish-dropzone">Cole o link ou anexe uma imagem</div></div><div className="edit-field wish-img-url" style={{gridColumn:'1/-1'}}><input id="wish-img" defaultValue={edit.Imagem||''} placeholder="https://..."/></div><div className="edit-field wish-file" style={{gridColumn:'1/-1'}}><input type="file" accept="image/*"/></div><div className="edit-field wish-observacao" style={{gridColumn:'1/-1'}}><label>OBSERVAÇÃO</label><textarea id="wish-obs" defaultValue={edit.Observação||''}/></div></div><div className="edit-actions"><button className="soft-btn" onClick={()=>setEdit(null)}>Fechar</button>{edit.index>=0&&<button className="form-danger" onClick={()=>{setBase(prev=>prev.filter((_,j)=>j!==edit.index));setEdit(null)}}>Excluir</button>}<button className="form-save" onClick={salvarWish}>Salvar nesta sessão</button></div></div></div>}
+</>}
+function PageRelatorios(){
+return <div className="report-layout">
+  
+  <div className="report-kpi-grid">
+    <div className="card report-card-clean"><div className="label">Saldo do mês</div><div className="value blue">R$ 970,00</div><div className="muted">Previsto após entradas e despesas</div></div>
+    <div className="card report-card-clean"><div className="label">Gastos totais</div><div className="value red">R$ 1.480,00</div><div className="muted">Dentro do orçamento</div></div>
+    <div className="card report-card-clean"><div className="label">Faturas</div><div className="value purple">R$ 620,00</div><div className="muted">Próximo vencimento 05/06</div></div>
+    <div className="card report-card-clean"><div className="label">Reserva</div><div className="value green">20%</div><div className="muted">R$ 2.000 de R$ 10.000</div></div>
+  </div>
+  <div className="report-two-col">
+    <div className="card section-card">
+      <h2 className="report-section-title">Análise do mês</h2>
+      <div className="report-stack">
+        <div className="report-note"><b>📌 Principal leitura</b><span>Seu mês está concentrado em despesas variáveis, faturas e compromissos. O ideal é acompanhar cartões e parcelas antes de novas compras.</span></div>
+        <div className="report-note"><b>🛡 Reserva</b><span>A reserva está em 20%. O próximo passo é manter aportes mensais sem tratar reserva como saldo disponível.</span></div>
+        <div className="report-note"><b>🚙 Dívidas</b><span>Prioridade atual: quitar a parte do pai e depois avançar para a mãe.</span></div>
+      </div>
+      <div className="report-chart">
+        <h3>Fluxo de caixa semanal</h3>
+        <div className="fake-line-chart">
+          <svg viewBox="0 0 600 190" preserveAspectRatio="none">
+            <path d="M0 120 C80 95 115 150 170 130 S270 40 350 65 S480 95 600 35" fill="none" stroke="#22c55e" strokeWidth="4"/>
+            <path d="M0 142 C70 100 110 110 170 130 S285 60 360 80 S480 92 600 48" fill="none" stroke="#ef4444" strokeWidth="4"/>
+            <path d="M0 155 C85 185 120 180 190 150 S320 145 420 156 S510 170 600 160" fill="none" stroke="#2563eb" strokeWidth="4" strokeDasharray="9 9"/>
+          </svg>
         </div>
+        <div className="chart-legend"><span><i className="legend-dot" style={{background:'#22c55e'}}></i>Receitas</span><span><i className="legend-dot" style={{background:'#ef4444'}}></i>Despesas</span><span><i className="legend-dot" style={{background:'#2563eb'}}></i>Saldo</span></div>
       </div>
     </div>
-    <div className="m-sec">
-      <div className="m-sec-h"><div className="m-sec-t">🏦 Minhas contas</div><div className="m-sec-l">Ver todas ›</div></div>
-      {[{nm:'Carteira',em:'👜',sl:saldo},...Object.values(CFG.CARTOES).slice(0,2).map(c=>({nm:c.nome.split(' ')[0],em:c.emoji,sl:0}))].map((c,i)=>(
-        <div className="m-conta" key={i}><div className="m-conta-ic">{c.em}</div><div><div className="m-conta-nm">{c.nm}</div><div className="m-conta-tp">Conta</div></div><div className="m-conta-sl" style={{color:c.sl<0?'var(--red)':'var(--text)'}}>{brl(c.sl)}</div></div>
-      ))}
-    </div>
-    <div className="m-sec">
-      <div className="m-sec-h"><div className="m-sec-t">📊 Gráfico por categoria</div></div>
-      <div className="m-gc">
-        <div className="m-gc-tabs">{['Todas','Receitas','Despesas','Não pagas'].map((t,i)=><div key={t} className={`m-gc-tab ${i===2?'on':''}`}>{t}</div>)}</div>
-        <div className="m-gc-canvas">
-          <canvas ref={ref} style={{maxHeight:160}}/>
-          {gastos>0&&<div className="m-gc-ctr"><div className="m-gc-cv">{brl(gastos)}</div><div className="m-gc-cs">Total</div></div>}
-          {!gastos&&<div style={{color:'var(--muted)',fontSize:12}}>Sem gastos</div>}
-        </div>
-        {topCats.length>0&&<div className="m-dets">
-          <div className="m-det-ttl">Detalhes</div>
-          {topCats.map(([cat,val],i)=>{const pct=gastos>0?val/gastos*100:0;return<div className="m-det" key={cat}>
-            <div className="m-det-h"><span className="m-det-tag" style={{background:catCores[cat]||'#94a3b8'}}>{cat}</span><div className="m-det-r"><div className="m-det-v">{brl(val)}</div><div className="m-det-p">{pct.toFixed(2)}%</div></div></div>
-            <Prog atual={val} meta={gastos} cor={catCores[cat]}/>
-          </div>;})}
-        </div>}
+    <div className="card section-card">
+      <h2 className="report-section-title">Exportações</h2>
+      <div className="summary-lines export-list">
+        <div className="summary-line"><span>Lançamentos</span><b>CSV</b></div>
+        <div className="summary-line"><span>Resumo mensal</span><b>PDF</b></div>
+        <div className="summary-line"><span>Listas de compras</span><b>CSV</b></div>
       </div>
+      <p className="section-subtitle">A exportação real entra quando conectarmos o site ao Apps Script/Google Sheets.</p>
+      <h2 className="report-section-title" style={{marginTop:18}}>Ranking de gastos</h2>
+      <div className="ranking-box">Sem gastos no período</div>
     </div>
-    <div className="m-sec">
-      <div className="m-sec-h"><div className="m-sec-t">🎯 Meus limites</div><div className="m-sec-l">↗</div></div>
-      <div className="m-gc" style={{padding:'12px 14px'}}>
-        <div style={{fontSize:11,color:'var(--muted)',marginBottom:3}}>Gastos por categoria</div>
-        <div style={{fontSize:16,fontWeight:700,fontFamily:"'DM Mono',monospace",marginBottom:6}}>{brl(gastos)}</div>
-        <Prog atual={gastos} meta={Object.values(CFG.LIMITES).reduce((a,b)=>a+b,0)} cor="var(--green)"/>
-      </div>
-    </div>
-    <div className="m-sec">
-      <div className="m-sec-h"><div className="m-sec-t">⭐ Minhas metas</div><div className="m-sec-l">↗</div></div>
-      {dados.metas.length===0?<div className="m-gc" style={{textAlign:'center',padding:20,color:'var(--muted)',fontSize:12}}>Nenhuma meta. Diga ao bot: <em>"guardei 200 na reserva"</em></div>:
-        dados.metas.slice(0,2).map((m,i)=>{const at=Number(m['Valor_Atual']||0);const mt=Number(m['Valor_Meta']||1);const pct=Math.min((at/mt)*100,100);const cor=CFG.CORES[i];return<div className="m-meta" key={i}>
-          <div className="m-meta-h"><div className="m-meta-nm">{m['Nome']}</div><div className="m-meta-pct" style={{color:cor}}>{Math.round(pct)}%</div></div>
-          <Prog atual={at} meta={mt} cor={cor}/>
-          <div className="m-meta-vls"><span>{brl(at)} guardado</span><span>Meta: {brl(mt)}</span></div>
-        </div>;})}
-    </div>
-    <div className="m-sec" style={{paddingBottom:8}}>
-      <div className="m-sec-h"><div className="m-sec-t">📋 Lançamentos</div></div>
-      {Object.entries(grupos).slice(0,5).map(([data,items])=>(
-        <div key={data}>
-          <div className="m-lg-d">{data}</div>
-          <div className="m-lg">
-            {items.map((r,i)=>{const cor=catCores[r['Categoria']]||'#94a3b8';return<div className="m-li" key={i}>
-              <div className="m-li-ic">{r['Tipo']==='gasto'?'💸':'💰'}</div>
-              <div className="m-li-info">
-                <div className="m-li-nm">{r['Descrição']||'—'}</div>
-                <div className="m-li-ct">🏦 {r['Forma_Pagto']||'carteira'}</div>
-                <div className="m-li-meta">
-                  <span className="m-li-st" style={{color:r['Tipo']==='gasto'?'var(--red)':'var(--green)'}}>{r['Tipo']==='gasto'?'● Pago':'● Receita'}</span>
-                  {r['Categoria']&&<span className="m-cat-tag" style={{background:cor+'22',color:cor}}>🏷 {r['Categoria']}</span>}
-                </div>
-              </div>
-              <div className={`m-li-val ${r['Tipo']==='gasto'?'neg':'pos'}`}>{r['Tipo']==='gasto'?'-':'+'}{brl(r['Valor'])}</div>
-            </div>;})}
-          </div>
+  </div>
+  <div className="month-resume"><h2>Resumo do mês</h2><p>Em Maio/2026, você registrou <b>0 lançamento(s)</b>, com receitas de <b>R$ 0,00</b>, despesas de <b>R$ 0,00</b> e saldo de <b>R$ 0,00</b>. A maior categoria de gasto foi —.</p></div>
+</div>}function PageDividas(){
+const[tab,setTab]=useState('devo');const[edit,setEdit]=useState(null);
+const[devo,setDevo]=useState([{nome:'Carro',icone:'🚙',imagem:'',total:20400,pago:1000,obs:'Dívida dividida entre pai e mãe',partes:[{nome:'Pai',total:5400,pago:1000},{nome:'Mãe',total:15000,pago:0}]}]);
+const[devem,setDevem]=useState([]);
+const novo=()=>setEdit({nome:'',icone:'',imagem:'',total:0,pago:0,obs:'',tipo:tab});
+const salvar=()=>{const item={nome:document.getElementById('div-nome').value||'Nova dívida',icone:document.getElementById('div-icone').value||'💸',imagem:document.getElementById('div-img').value||'',total:Number((document.getElementById('div-total').value||'0').replace(',','.')),pago:Number((document.getElementById('div-pago').value||'0').replace(',','.')),obs:document.getElementById('div-obs').value,partes:edit.partes||[]};const setter=edit.tipo==='devem'?setDevem:setDevo;setter(prev=>edit.index>=0?prev.map((x,j)=>j===edit.index?item:x):[...prev,item]);setEdit(null)};
+const lista=tab==='devo'?devo:devem;
+return <>
+  <div className="card section-card">
+    <div className="card-title"><span>Dívidas</span><div className="debt-actions"><button className="mini-add" title="Nova dívida" onClick={novo}>＋</button><div className="segmented"><button className={tab==='devo'?'on':''} onClick={()=>setTab('devo')}>Eu devo</button><button className={tab==='devem'?'on':''} onClick={()=>setTab('devem')}>Me devem</button></div></div></div>
+    <p className="section-subtitle">Cadastre valores que você deve e valores que outras pessoas devem para você. A edição por enquanto atualiza a tela; depois será gravada no Sheets.</p>
+    <div className="debt-list">
+      {lista.length?lista.map((d,i)=>{const falta=(Number(d.total)||0)-(Number(d.pago)||0);const pct=d.total?d.pago/d.total*100:0;return <div className="card debt-main-card loan-card" key={i}>
+        <button className="icon-only" title="Editar dívida" onClick={()=>setEdit({...d,index:i,tipo:tab})}>✎</button>
+        <div className="debt-photo">{d.imagem?<img src={d.imagem} alt={d.nome}/>:<div className="debt-photo-placeholder">{d.icone||'💸'}</div>}</div>
+        <div className="debt-content">
+          <div className="debt-topline"><div className="debt-main-title">{d.icone||'💸'} {d.nome}</div></div>
+          <div className="debt-value">{brl(falta)}</div>
+          <Progress pct={pct} color="var(--blue)"/>
+          <div className="debt-subgrid"><div className="debt-sub"><span>Pago</span><b>{brl(d.pago)}</b></div><div className="debt-sub"><span>Total</span><b>{brl(d.total)}</b></div><div className="debt-sub"><span>Falta</span><b>{brl(falta)}</b></div></div>
+          {d.obs&&<div className="loan-note">{d.obs}</div>}
         </div>
-      ))}
-      {Object.keys(grupos).length===0&&<div className="empty">Nenhum lançamento este mês</div>}
+        <div className="debt-breakdown-col">{d.partes?.length>0?<div className="debt-breakdown">{d.partes.map((p,k)=>{const pf=(Number(p.total)||0)-(Number(p.pago)||0);return <div className="card debt-person" key={k}><h3>{p.nome==='Pai'?'👨':'👩'} {p.nome}</h3><Progress pct={p.total?p.pago/p.total*100:0} color="var(--blue)"/><div className="summary-line"><span>Pago</span><b>{brl(p.pago)}</b></div><div className="summary-line"><span>Total</span><b>{brl(p.total)}</b></div><div className="summary-line"><span>Falta</span><b>{brl(pf)}</b></div></div>})}</div>:<span className="tag tag-blue">{tab==='devo'?'Eu devo':'Me devem'}</span>}</div>
+      </div>}):<div className="editable-row"><div className="editable-row-title">Nenhum registro cadastrado</div><div className="editable-row-sub">Clique no + para cadastrar uma nova dívida.</div><b>{brl(0)}</b></div>}
     </div>
-  </div>;
-}
+  </div>
+  {edit&&<div className="edit-modal-backdrop" onClick={()=>setEdit(null)}><div className="edit-modal" onClick={e=>e.stopPropagation()}><h3>{edit.index>=0?'Editar dívida':'Nova dívida'}</h3><div className="edit-grid">
+    <div className="edit-field"><label>Nome</label><input id="div-nome" defaultValue={edit.nome}/></div>
+    <div className="edit-field"><label>Ícone</label><input id="div-icone" defaultValue={edit.icone} placeholder="Ex: 🚙"/></div>
+    <div className="edit-field" style={{gridColumn:'1/-1'}}><label>Link da imagem da dívida</label><input id="div-img" defaultValue={edit.imagem||''} placeholder="Cole o link da imagem da dívida"/></div>
+    <div className="edit-field" style={{gridColumn:'1/-1'}}><label>Anexar imagem da dívida</label><input type="file" accept="image/*"/><div className="file-note">Ex.: carro, viagem financiada, pessoa/empresa ou comprovante visual.</div></div>
+    <div className="edit-field"><label>Valor total</label><input id="div-total" defaultValue={edit.total}/></div>
+    <div className="edit-field"><label>Valor pago/recebido</label><input id="div-pago" defaultValue={edit.pago}/></div>
+    <div className="edit-field" style={{gridColumn:'1/-1'}}><label>Observação</label><textarea id="div-obs" defaultValue={edit.obs}/></div>
+  </div><div className="edit-actions"><button className="soft-btn" onClick={()=>setEdit(null)}>Cancelar</button>{edit.index>=0&&<button className="form-danger" onClick={()=>{(edit.tipo==='devem'?setDevem:setDevo)(prev=>prev.filter((_,j)=>j!==edit.index));setEdit(null)}}>Excluir</button>}<button className="form-save" onClick={salvar}>Salvar</button></div></div></div>}
+</>}function PageContas(){const[edit,setEdit]=useState(null);const open=(tipo,item)=>setEdit({tipo,item});const saldoContas=CFG.CONTAS.filter(c=>!String(c.tipo||'').toLowerCase().includes('carteira')).reduce((s,c)=>s+moneyNum(c.saldo),0);const saldoCarteiras=CFG.CONTAS.filter(c=>String(c.tipo||'').toLowerCase().includes('carteira')||String(c.nome||'').toLowerCase().includes('carteira')).reduce((s,c)=>s+moneyNum(c.saldo),0);return <><div className="account-balance-summary"><div className="card balance-summary-card"><h3>Saldo em contas</h3><strong>{brl(saldoContas)}</strong><div className="line"></div></div><div className="card balance-summary-card"><h3>Carteiras</h3><strong>{brl(saldoCarteiras)}</strong><div className="line"></div></div></div><div className="card section-card settings-section"><div className="card-title">Contas cadastradas</div><p className="section-subtitle">Cadastre bancos, carteiras e saldos que você quer acompanhar no sistema. O ícone de cada conta será ajustável pelo lápis.</p><div className="account-grid">{CFG.CONTAS.map(c=><div className="card account-card" key={c.nome}><button className="edit-pencil" title="Editar conta" onClick={()=>open('conta',c)}>✎</button><div className="account-head"><div className="account-logo" style={{background:c.cor}}><IconView value={c.emoji} label={c.nome}/></div><div><div className="account-name">{c.nome}</div><div className="account-type">{c.tipo}</div></div></div><div className="account-balance">{brl(c.saldo)}</div><span className="status">{c.status}</span></div>)}</div></div><div className="card section-card"><div className="card-title">Meios de pagamento</div><p className="section-subtitle">Formas que o bot pode reconhecer ao registrar gastos e entradas.</p><div className="pay-grid">{CFG.MEIOS.map(m=><div className="card pay-card" key={m.nome}><button className="edit-pencil" title="Editar meio de pagamento" onClick={()=>open('meio de pagamento',m)}>✎</button><div className="pay-emoji"><IconView value={m.emoji} label={m.nome}/></div><div className="pay-name">{m.nome}</div><div className="pay-type">{m.tipo}</div><div className="pay-type">{m.conta}</div></div>)}</div></div>{edit&&<div className="edit-modal-backdrop" onClick={()=>setEdit(null)}><div className="edit-modal" onClick={e=>e.stopPropagation()}><h3>Editar {edit.tipo}</h3><div className="edit-grid"><div className="edit-field"><label>Nome</label><input defaultValue={edit.item.nome}/></div><div className="edit-field"><label>Link da imagem do ícone</label><input defaultValue={edit.item.emoji} placeholder="Cole o link da imagem do ícone"/></div><div className="edit-field"><label>Anexar imagem do ícone</label><input type="file" accept="image/*"/><div className="file-note">Pode usar arquivo do computador ou colar um link no campo anterior.</div></div><div className="edit-field"><label>Tipo</label><input defaultValue={edit.item.tipo}/></div><div className="edit-field"><label>Cor</label><input defaultValue={edit.item.cor||''} placeholder="#22c55e"/></div><div className="edit-field" style={{gridColumn:'1/-1'}}><label>Observação</label><textarea placeholder="Ex: conta principal, usar para pix, carteira física..." defaultValue={edit.item.conta||''}/></div></div><div className="tip" style={{marginTop:12}}>Por enquanto esta edição é visual. Quando conectarmos o site ao Google Sheets, o link/anexo da imagem do ícone e os demais ajustes serão salvos de verdade.</div><div className="edit-actions"><button className="soft-btn" onClick={()=>setEdit(null)}>Fechar</button></div></div></div>}</>}function PageNotificacoes(){return <div className="card section-card"><div className="card-title">Notificações <button className="select-chip">Editar horários</button></div><p className="section-subtitle">Central de alertas que depois será ligada ao bot do Telegram.</p><div className="notice-list">{CFG.NOTIFICACOES.map((n,i)=><div className="notice-row" key={n.nome}><div className="notice-ic">{['🔔','💳','📊','🛡','📦'][i]}</div><div><div className="notice-title">{n.nome}</div><div className="notice-desc">{n.desc}</div></div><div className={`toggle ${n.ativo?'on':''}`}></div></div>)}</div><div className="tip">Esses controles são a estrutura visual. Na próxima etapa, conectamos com o bot para enviar mensagens automáticas no Telegram.</div></div>}
+function PageConfig({setTela,dados,mes,onMenuChange}){
+const defaultNotifs=CFG.NOTIFICACOES.map((n,i)=>({...n,id:['resumo','fatura','orcamento','reserva','parcelas'][i]||String(i),icone:['🌤️','💳','📊','🛡️','📦'][i]}));
+const [notifs,setNotifs]=useState(()=>{try{const saved=JSON.parse(localStorage.getItem('bf-notificacoes')||'null');return defaultNotifs.map(n=>saved&&saved[n.id]!==undefined?{...n,ativo:!!saved[n.id]}:n)}catch(e){return defaultNotifs}});
+const [hora,setHora]=useState(()=>localStorage.getItem('bf-hora-alertas')||'08:00');
+const [antecedencia,setAntecedencia]=useState(()=>localStorage.getItem('bf-dias-alerta')||'3');
+const [modal,setModal]=useState(null);
+const [saved,setSaved]=useState(false);
+const [previewLogo,setPreviewLogo]=useState(localStorage.getItem('bf-logo')||'');
+const [previewFav,setPreviewFav]=useState(localStorage.getItem('bf-favicon')||'');
+const toggle=id=>setNotifs(prev=>{const next=prev.map(n=>n.id===id?{...n,ativo:!n.ativo}:n);localStorage.setItem('bf-notificacoes',JSON.stringify(Object.fromEntries(next.map(n=>[n.id,n.ativo]))));return next});
+const saveHora=v=>{setHora(v);localStorage.setItem('bf-hora-alertas',v)};
+const saveDias=v=>{setAntecedencia(v);localStorage.setItem('bf-dias-alerta',v)};
+const saveModal=()=>{setSaved(true);if(modal==='menu'&&onMenuChange)onMenuChange(v=>v+1);setTimeout(()=>setSaved(false),1800)};
+const uploadToLS=(file,key,cb)=>{if(!file)return;if(!file.type.startsWith('image/')){alert('Escolha um arquivo de imagem.');return}const reader=new FileReader();reader.onload=()=>{try{localStorage.setItem(key,reader.result);cb&&cb(reader.result);saveModal()}catch(e){alert('A imagem é muito pesada para salvar no navegador. Use um link ou escolha uma imagem menor.')}};reader.readAsDataURL(file)};
+const dadosMes=()=>((dados?.lancamentos||[]).filter(r=>(r.Mês||'').toString()===(mes||'2026-05')));
+const baixar=(nome,conteudo,tipo)=>{const blob=new Blob([conteudo],{type:tipo});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=nome;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},100)};
+const htmlTabelaMes=()=>{const rows=dadosMes();const trs=rows.length?rows.map(r=>`<tr><td>${r.Data||''}</td><td>${r.Tipo||''}</td><td>${r.Categoria||''}</td><td>${r.Descrição||''}</td><td>${brl(r.Valor||0)}</td><td>${r.Forma_Pagto||''}</td></tr>`).join(''):'<tr><td colspan="6">Sem lançamentos no mês</td></tr>';return `<table border="1"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Forma de pagamento</th></tr></thead><tbody>${trs}</tbody></table>`};
+const exportExcel=()=>{const html=`<html><head><meta charset="utf-8"></head><body><h2>BiFinanças — ${mes||'mês atual'}</h2>${htmlTabelaMes()}</body></html>`;baixar(`bifinancas-${mes||'mes'}.xls`,html,'application/vnd.ms-excel;charset=utf-8')};
+const exportPDF=()=>{const w=window.open('','_blank');w.document.write(`<html><head><title>Relatório BiFinanças</title><style>body{font-family:Arial;padding:24px}table{border-collapse:collapse;width:100%}td,th{padding:8px;border:1px solid #ddd;text-align:left}h1{margin-bottom:4px}
+/* ajustes config: rolagem e upload */
+.edit-modal{max-height:88vh;overflow-y:auto;overscroll-behavior:contain}
+.edit-modal-backdrop{align-items:center;overflow-y:auto}
+.settings-preview-img{display:block;max-width:160px;max-height:120px;object-fit:contain;border:1px solid var(--line);border-radius:14px;background:#f8fafc;padding:8px;margin-top:8px}
+.settings-upload-row small,.file-note{font-size:12px;color:var(--muted);line-height:1.35}
+.settings-actions-grid{display:flex;flex-wrap:wrap;gap:10px}
+.settings-action-btn{height:38px;border-radius:12px;border:1px solid var(--line);background:#fff;padding:0 14px;font-weight:800;color:#475569}
+.settings-action-btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.settings-action-btn.danger{background:#fee2e2;border-color:#fecaca;color:#991b1b}
+.settings-divider{grid-column:1/-1;height:1px;background:var(--line);margin:4px 0}
+@media(max-width:640px){.edit-modal{max-height:92vh}.settings-actions-grid{flex-direction:column}.settings-action-btn{width:100%}}
 
-function MPageLancamentos({dados,mes}){
-  const{gastos,entradas,saldo,catCores,grupos}=calcMes(dados,mes);
-  return<div className="m-content">
-    <div style={{background:'var(--green)',padding:'0 12px 14px'}}>
-      <div style={{background:'rgba(255,255,255,.12)',borderRadius:14,padding:'12px 14px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:9}}>
-        {[['🔵','Saldo hoje',saldo],['🟣','Balanço',saldo],['🟢','Receitas',entradas],['🔴','Despesas',gastos],['🟢','Recebidos',entradas],['🟡','Pagos',gastos],['🔵','A receber',0],['🟠','A pagar',0]].map(([d,l,v])=>(
-          <div key={l}><div style={{fontSize:9,color:'rgba(255,255,255,.6)',marginBottom:1}}>{d} {l}</div><div style={{fontSize:12,fontWeight:700,fontFamily:"'DM Mono',monospace",color:'white'}}>{brl(v)}</div></div>
-        ))}
-      </div>
-    </div>
-    {Object.entries(grupos).map(([data,items])=>(
-      <div key={data}>
-        <div className="m-lg-d">{data}</div>
-        <div className="m-lg">
-          {items.map((r,i)=>{const cor=catCores[r['Categoria']]||'#94a3b8';return<div className="m-li" key={i}>
-            <div className="m-li-ic">{r['Tipo']==='gasto'?'💸':'💰'}</div>
-            <div className="m-li-info">
-              <div className="m-li-nm">{r['Descrição']||'—'}</div>
-              <div className="m-li-ct">🏦 {r['Forma_Pagto']||'carteira'}</div>
-              <div className="m-li-meta">
-                <span className="m-li-st" style={{color:r['Tipo']==='gasto'?'var(--red)':'var(--green)'}}>{r['Tipo']==='gasto'?'● Pago':'● Receita'}</span>
-                {r['Categoria']&&<span className="m-cat-tag" style={{background:cor+'22',color:cor}}>🏷 {r['Categoria']}</span>}
-                <span style={{fontSize:9,color:'var(--muted)'}}>📅 {r['Data']}</span>
-              </div>
-            </div>
-            <div className={`m-li-val ${r['Tipo']==='gasto'?'neg':'pos'}`}>{r['Tipo']==='gasto'?'-':'+'}{brl(r['Valor'])}</div>
-          </div>;})}
-        </div>
-      </div>
-    ))}
-    {Object.keys(grupos).length===0&&<div className="empty">Nenhum lançamento</div>}
-  </div>;
-}
-
-function MPageLimites({dados,mes}){
-  const{gastos,catTotals}=calcMes(dados,mes);
-  const totalL=Object.values(CFG.LIMITES).reduce((a,b)=>a+b,0);
-  return<div className="m-content">
-    <div style={{background:'var(--green)',padding:'0 12px 14px'}}>
-      <div style={{background:'rgba(255,255,255,.12)',borderRadius:14,padding:'12px 14px'}}>
-        <div style={{fontSize:10,color:'rgba(255,255,255,.7)',marginBottom:2}}>Gastos Por Categoria</div>
-        <div style={{fontSize:20,fontWeight:700,fontFamily:"'DM Mono',monospace",color:'white',marginBottom:3}}>{brl(gastos)}</div>
-        <div style={{background:'rgba(255,255,255,.2)',borderRadius:99,height:5,overflow:'hidden'}}>
-          <div style={{height:5,width:`${Math.min((gastos/totalL)*100,100)}%`,background:'white',borderRadius:99}}/>
-        </div>
-        <div style={{display:'flex',justifyContent:'space-between',marginTop:5,fontSize:10,color:'rgba(255,255,255,.6)'}}>
-          <span>Restante: {brl(Math.max(totalL-gastos,0))}</span>
-          <span>{Math.round((gastos/totalL)*100||0)}%</span>
-        </div>
-      </div>
-    </div>
-    <div style={{display:'flex',gap:5,padding:'9px 12px',background:'white',borderBottom:'1px solid var(--border)'}}>
-      {['Por categoria','Geral'].map((t,i)=>(
-        <div key={t} style={{flex:1,padding:'6px',textAlign:'center',borderRadius:99,background:i===0?'var(--green)':'transparent',color:i===0?'white':'var(--muted)',fontSize:12,fontWeight:600,cursor:'pointer'}}>{t}</div>
-      ))}
-    </div>
-    <div style={{padding:'8px 12px 0'}}>
-      {Object.entries(CFG.LIMITES).map(([cat,lim],i)=>{
-        const g=catTotals[cat]||0;const p=lim>0?(g/lim)*100:0;const c=CST(p);
-        return<div className="m-lim" key={cat}>
-          <div className="m-lim-h"><div className="m-lim-nm"><div className="m-lim-dot" style={{background:CFG.CORES[i%CFG.CORES.length]}}/>{cat}</div><div className="m-lim-vls"><div className="m-lim-g" style={{color:g>0?c:'var(--muted)'}}>{brl(g)}</div><div className="m-lim-l">de {brl(lim)}</div></div></div>
-          <Prog atual={g} meta={lim} cor={c}/>
-          <div className="m-lim-ft"><span style={{color:'var(--muted)'}}>Restante: {brl(Math.max(lim-g,0))}</span><span style={{color:c,fontWeight:600}}>{Math.round(p)}%</span></div>
-        </div>;
-      })}
-    </div>
-  </div>;
-}
-
-function MPageMetas({dados}){
-  return<div className="m-content" style={{padding:'12px 12px 0'}}>
-    {dados.metas.length===0?<div className="m-gc" style={{textAlign:'center',padding:28,color:'var(--muted)'}}>
-      <div style={{fontSize:28,marginBottom:8}}>🎯</div>
-      <div style={{fontWeight:600,marginBottom:4}}>Nenhuma meta</div>
-      <div style={{fontSize:12}}>Diga ao bot: <em>"guardei 200 na reserva"</em></div>
-    </div>:
-    dados.metas.map((m,i)=>{const at=Number(m['Valor_Atual']||0);const mt=Number(m['Valor_Meta']||1);const pct=Math.min((at/mt)*100,100);const cor=CFG.CORES[i%CFG.CORES.length];return<div className="m-meta" key={i}>
-      <div className="m-meta-h"><div><div className="m-meta-nm">{m['Nome']}</div><div style={{fontSize:10,color:'var(--muted)',marginTop:1}}>{m['Status']||'Em andamento'}</div></div><div className="m-meta-pct" style={{color:cor}}>{Math.round(pct)}%</div></div>
-      <Prog atual={at} meta={mt} cor={cor}/>
-      <div className="m-meta-vls"><span>{brl(at)} guardado</span><span>Meta: {brl(mt)}</span></div>
-      {m['Prazo']&&<div style={{fontSize:10,color:'var(--muted)',marginTop:4}}>📅 Prazo: {m['Prazo']}</div>}
-    </div>;})}
-  </div>;
-}
-
-/* ── MOBILE APP ─────────────────────────────────── */
-const M_NAVS=[
-  {id:'inicio',ic:'🏠',lb:'Início'},
-  {id:'lancamentos',ic:'📋',lb:'Transações'},
-  {id:'add',ic:'+',lb:''},
-  {id:'limites',ic:'🎯',lb:'Limites'},
-  {id:'metas',ic:'⭐',lb:'Metas'},
+.nav-icon img{width:18px;height:18px;object-fit:cover;border-radius:5px;display:block}
+</style></head><body><h1>BiFinanças</h1><p>Relatório do mês ${mes||''}</p>${htmlTabelaMes()}<script>window.onload=()=>window.print()<\/script></body></html>`);w.document.close()};
+const resetTudo=()=>{if(confirm('Tem certeza que deseja resetar todos os dados locais desta sessão? Isso apaga login salvo, configurações, notificações e ajustes visuais deste navegador.')){localStorage.clear();location.reload()}};
+const trocarSenha=()=>{const atual=document.getElementById('senha-atual')?.value||'';const nova=document.getElementById('senha-nova')?.value||'';const conf=document.getElementById('senha-confirma')?.value||'';const senhaAtual=localStorage.getItem('bf-senha-local')||CFG.SENHA;if(atual!==senhaAtual&&atual!==CFG.SENHA){alert('Senha atual incorreta');return}if(nova.length<4){alert('A nova senha precisa ter pelo menos 4 caracteres');return}if(nova!==conf){alert('A confirmação não confere');return}localStorage.setItem('bf-senha-local',nova);alert('Senha alterada. No próximo login, use a nova senha.');saveModal()};
+const sections=[
+ {ic:'🎨',t:'Perfil e aparência',d:'Nome do app, logo, favicon, cor principal e ícone do app instalado no celular.',btn:'Editar aparência',action:()=>setModal('aparencia')},
+ {ic:'🧭',t:'Menu lateral',d:'Editar o nome e o ícone que aparecem no menu lateral e na barra superior.',btn:'Editar menu',action:()=>setModal('menu')},
+ {ic:'🏦',t:'Contas, cartões e meios de pagamento',d:'Atalho para bancos, carteiras, Pix, débito, dinheiro e cartões com ícone e cor.',btn:'Gerenciar contas',action:()=>setTela('contas')},
+ {ic:'🏷️',t:'Categorias e orçamento',d:'Categorias de gastos, limite mensal, cor, ícone e ativação no orçamento.',btn:'Gerenciar categorias',action:()=>setTela('orcamento')},
+ {ic:'🤖',t:'Bot Telegram',d:'Comandos, palavras-chave, categorias reconhecidas e respostas automáticas do bot.',btn:'Configurar bot',action:()=>setModal('bot')},
+ {ic:'📤',t:'Dados, backup e exportação',d:'Exportar Excel/PDF do mês, limpar testes, resetar dados locais e preparar backup da planilha.',btn:'Ver dados',action:()=>setModal('dados')},
+ {ic:'🔐',t:'Segurança e acesso',d:'Trocar senha local, sessão salva, acesso pelo celular e proteção futura via Apps Script.',btn:'Ver segurança',action:()=>setModal('seguranca')}
 ];
-
-function MobileApp({dados,mes,setMes,onLogout}){
-  const[tela,setTela]=useState('inicio');
-  const p={dados,mes,setMes};
-  const renderTela=()=>{
-    switch(tela){
-      case 'inicio':return<MPageInicio {...p}/>;
-      case 'lancamentos':return<MPageLancamentos {...p}/>;
-      case 'limites':return<MPageLimites {...p}/>;
-      case 'metas':return<MPageMetas {...p}/>;
-      default:return<MPageInicio {...p}/>;
-    }
-  };
-  return<div className="m-layout">
-    <div className="m-hdr">
-      <div className="m-hdr-top">
-        <div><div className="m-hdr-greeting">Olá,</div><div className="m-hdr-name">{CFG.NOME}</div></div>
-        <div style={{display:'flex',alignItems:'center',gap:10}}>
-          <span style={{fontSize:20,cursor:'pointer',color:'rgba(255,255,255,.8)'}} onClick={onLogout}>☰</span>
-          <div className="m-hdr-av">B</div>
-        </div>
-      </div>
-      <div className="m-hdr-bot">
-        <div className="m-mes">
-          <button className="m-arr" onClick={()=>setMes(MANT(mes))}>‹</button>
-          <div className="m-mes-lbl">{MESES[+mes.split('-')[1]-1]} De {mes.split('-')[0]} ⌄</div>
-          <button className="m-arr" onClick={()=>setMes(MSEG(mes))}>›</button>
-        </div>
-        <div className="m-hide">Esconder ⌃</div>
-      </div>
-    </div>
-    <div style={{overflowY:'auto',height:'calc(100vh - 80px - 72px)'}}>{renderTela()}</div>
-    <div className="m-bnav">
-      {M_NAVS.map(n=>{
-        if(n.id==='add')return<div key="add" style={{flex:1,display:'flex',justifyContent:'center'}}><button className="m-nb-add">+</button></div>;
-        return<button key={n.id} className={`m-nb ${tela===n.id?'on':''}`} onClick={()=>setTela(n.id)}>
-          <span className="m-nb-ic">{n.ic}</span>
-          <span className="m-nb-lb">{n.lb}</span>
-        </button>;
-      })}
-    </div>
-  </div>;
-}
-
-/* ── APP ROOT ────────────────────────────────────── */
-function App(){
-  const[logado,setLogado]=useState(false);
-  const[mes,setMes]=useState(MA());
-  const{dados,loading}=useDados(logado);
-
-  if(!logado)return<Login ok={()=>setLogado(true)}/>;
-  if(loading)return<div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:' var(--bg)'}}><div className="loading"><div className="spinner"/><span>Carregando...</span></div></div>;
-
-  const props={dados,mes,setMes,onLogout:()=>setLogado(false)};
-  return<>
-    <DesktopApp {...props}/>
-    <MobileApp  {...props}/>
-  </>;
-}
+const modalContent={
+ aparencia:{title:'Perfil e aparência',fields:<div className="settings-form-grid"><div className="settings-form-field"><label>Nome do app</label><input defaultValue={localStorage.getItem('bf-app-nome')||'BiFinanças'} onChange={e=>localStorage.setItem('bf-app-nome',e.target.value)}/></div><div className="settings-form-field"><label>Cor principal</label><input defaultValue={localStorage.getItem('bf-cor')||'#22c55e'} onChange={e=>localStorage.setItem('bf-cor',e.target.value)}/></div><div className="settings-form-field full"><label>Link do logo</label><input placeholder="https://..." defaultValue={localStorage.getItem('bf-logo')||''} onChange={e=>{localStorage.setItem('bf-logo',e.target.value);setPreviewLogo(e.target.value)}}/></div><div className="settings-form-field full settings-upload-row"><label>Upload do logo</label><input type="file" accept="image/*" onChange={e=>uploadToLS(e.target.files[0],'bf-logo',setPreviewLogo)}/>{previewLogo&&<img className="settings-preview-img" src={previewLogo}/>}<small>Você pode colar um link ou escolher uma imagem do computador. Nesta fase fica salvo neste navegador.</small></div><div className="settings-form-field full"><label>Link do favicon / ícone do app</label><input placeholder="https://..." defaultValue={localStorage.getItem('bf-favicon')||''} onChange={e=>{localStorage.setItem('bf-favicon',e.target.value);setPreviewFav(e.target.value)}}/></div><div className="settings-form-field full settings-upload-row"><label>Upload do favicon / ícone do app</label><input type="file" accept="image/*" onChange={e=>uploadToLS(e.target.files[0],'bf-favicon',setPreviewFav)}/>{previewFav&&<img className="settings-preview-img" src={previewFav}/>}<small>Esse ícone será usado depois no PWA/app instalado no celular.</small></div></div>},
+ menu:{title:'Menu lateral',fields:<div className="settings-form-grid">{getMenuItems().map(m=><React.Fragment key={m.id}><div className="settings-form-field"><label>Nome no menu</label><input defaultValue={m.nome} onChange={e=>localStorage.setItem('bf-menu-nome-'+m.id,e.target.value)} /></div><div className="settings-form-field"><label>Ícone</label><input defaultValue={m.icone} placeholder="Emoji ou link da imagem" onChange={e=>localStorage.setItem('bf-menu-icone-'+m.id,e.target.value)} /></div></React.Fragment>)}<div className="settings-form-field full"><div className="settings-actions-grid"><button className="settings-action-btn" onClick={()=>{resetMenuItems();if(onMenuChange)onMenuChange(v=>v+1);alert('Menu restaurado para o padrão.')}}>Restaurar menu padrão</button></div></div><div className="settings-form-field full"><label>Observação</label><textarea readOnly defaultValue={'Você pode usar emoji, texto curto ou link de imagem no campo ícone. Depois de salvar, o menu lateral e a barra superior atualizam nesta sessão.'}></textarea></div></div>},
+ bot:{title:'Bot Telegram',fields:<div className="settings-form-grid"><div className="settings-form-field"><label>Modo das respostas</label><select defaultValue={localStorage.getItem('bf-bot-modo')||'resumido'} onChange={e=>localStorage.setItem('bf-bot-modo',e.target.value)}><option value="resumido">Resumido</option><option value="detalhado">Detalhado</option><option value="super-resumido">Super resumido</option></select></div><div className="settings-form-field"><label>Confirmação de lançamentos</label><select defaultValue={localStorage.getItem('bf-bot-confirmacao')||'resumo'} onChange={e=>localStorage.setItem('bf-bot-confirmacao',e.target.value)}><option value="resumo">Mostrar resumo</option><option value="curta">Resposta curta</option><option value="perguntar">Perguntar antes de salvar</option></select></div><div className="settings-form-field"><label>Quando forma de pagamento faltar</label><select defaultValue={localStorage.getItem('bf-bot-pagamento')||'botoes'} onChange={e=>localStorage.setItem('bf-bot-pagamento',e.target.value)}><option value="botoes">Mostrar botões</option><option value="perguntar">Perguntar por texto</option></select></div><div className="settings-form-field"><label>Excluir lançamento</label><select defaultValue={localStorage.getItem('bf-bot-excluir')||'botao'} onChange={e=>localStorage.setItem('bf-bot-excluir',e.target.value)}><option value="botao">Mostrar botão de excluir</option><option value="texto">Somente comando por texto</option></select></div><div className="settings-divider"></div><div className="settings-form-field full"><label>Usuário autorizado do Telegram</label><input defaultValue={localStorage.getItem('bf-telegram-user')||''} placeholder="ALLOWED_USER_ID" onChange={e=>localStorage.setItem('bf-telegram-user',e.target.value)}/></div><div className="settings-form-field full"><label>Palavras-chave de reserva</label><input defaultValue={localStorage.getItem('bf-key-reserva')||'guardei, reserva, poupei, caixinha'} onChange={e=>localStorage.setItem('bf-key-reserva',e.target.value)}/></div><div className="settings-form-field full"><label>Palavras-chave de dívida</label><input defaultValue={localStorage.getItem('bf-key-divida')||'paguei pai, paguei mãe, dívida, carro, meus pais'} onChange={e=>localStorage.setItem('bf-key-divida',e.target.value)}/></div><div className="settings-form-field full"><label>Palavras-chave da lista de mercado</label><input defaultValue={localStorage.getItem('bf-key-mercado')||'lista de mercado, coloca no mercado, comprei, marcar comprado'} onChange={e=>localStorage.setItem('bf-key-mercado',e.target.value)}/></div><div className="settings-form-field full"><label>Palavras-chave da wishlist/gift list</label><input defaultValue={localStorage.getItem('bf-key-wishlist')||'quero comprar, wishlist, presente, gift list'} onChange={e=>localStorage.setItem('bf-key-wishlist',e.target.value)}/></div><div className="settings-form-field full"><label>Formas de pagamento reconhecidas</label><input defaultValue={localStorage.getItem('bf-key-pagamentos')||'nubank, santander, mercado pago, caedu, banco do brasil, pix, dinheiro, débito'} onChange={e=>localStorage.setItem('bf-key-pagamentos',e.target.value)}/></div><div className="settings-form-field full"><label>Categorias reconhecidas automaticamente</label><textarea defaultValue={localStorage.getItem('bf-key-categorias')||'Alimentação, Mercado, Transporte/Gasolina, Lazer/Saídas, Roupas/Beleza, Assinaturas, Saúde/Farmácia, Dívidas/Compromissos, Reserva/Investimentos'} onChange={e=>localStorage.setItem('bf-key-categorias',e.target.value)}></textarea></div><div className="settings-form-field full"><label>Mensagem padrão quando não entender</label><textarea defaultValue={localStorage.getItem('bf-bot-fallback')||'Não consegui entender. Me manda de novo com valor, descrição e forma de pagamento.'} onChange={e=>localStorage.setItem('bf-bot-fallback',e.target.value)}></textarea></div><div className="settings-form-field"><label>Áudio</label><select defaultValue={localStorage.getItem('bf-bot-audio')||'on'} onChange={e=>localStorage.setItem('bf-bot-audio',e.target.value)}><option value="on">Aceitar áudio</option><option value="off">Desativar áudio</option></select></div><div className="settings-form-field"><label>Foto/comprovante</label><select defaultValue={localStorage.getItem('bf-bot-foto')||'on'} onChange={e=>localStorage.setItem('bf-bot-foto',e.target.value)}><option value="on">Aceitar foto</option><option value="off">Desativar foto</option></select></div></div>},
+ dados:{title:'Dados, backup e exportação',fields:<div className="settings-form-grid"><div className="settings-form-field"><label>Último backup</label><input value={localStorage.getItem('bf-ultimo-backup')||'Ainda não configurado'} readOnly/></div><div className="settings-form-field"><label>Mês exportado</label><input value={mes||'2026-05'} readOnly/></div><div className="settings-form-field full"><label>Ações do mês</label><div className="settings-actions-grid"><button className="settings-action-btn primary" onClick={exportExcel}>Exportar mês em Excel</button><button className="settings-action-btn primary" onClick={exportPDF}>Exportar mês em PDF</button><button className="settings-action-btn" onClick={()=>{localStorage.setItem('bf-ultimo-backup',new Date().toLocaleString('pt-BR'));saveModal()}}>Registrar backup local</button><button className="settings-action-btn danger" onClick={resetTudo}>Resetar todos os dados locais</button></div></div><div className="settings-form-field full"><label>Observação</label><textarea defaultValue={localStorage.getItem('bf-dados-obs')||'Excel e PDF já geram arquivo/visualização do mês com os dados carregados no dashboard. Reset apaga apenas dados locais do navegador; para apagar Google Sheets, faremos pelo Apps Script.'} onChange={e=>localStorage.setItem('bf-dados-obs',e.target.value)}></textarea></div></div>},
+ seguranca:{title:'Segurança e acesso',fields:<div className="settings-form-grid"><div className="settings-form-field"><label>Senha atual</label><input id="senha-atual" type="password" placeholder="Senha atual"/></div><div className="settings-form-field"><label>Sessão salva</label><select defaultValue={localStorage.getItem('bf-sessao')||'sim'} onChange={e=>localStorage.setItem('bf-sessao',e.target.value)}><option value="sim">Manter login salvo</option><option value="nao">Pedir senha sempre</option></select></div><div className="settings-form-field"><label>Nova senha</label><input id="senha-nova" type="password" placeholder="Ex: bf2026"/></div><div className="settings-form-field"><label>Confirmar nova senha</label><input id="senha-confirma" type="password" placeholder="Digite de novo"/></div><div className="settings-form-field full"><div className="settings-actions-grid"><button className="settings-action-btn primary" onClick={trocarSenha}>Trocar senha local</button><button className="settings-action-btn" onClick={()=>{localStorage.setItem('bf-senha-local','bf2026');alert('Senha definida como bf2026. No próximo login, use bf2026.');saveModal()}}>Definir senha como bf2026</button></div></div><div className="settings-form-field full"><label>Observação de segurança</label><textarea defaultValue={'A senha padrão desta versão é bf2026. A troca salva neste navegador. Ainda é uma proteção simples porque o site está em HTML; para edição real segura, vamos usar Apps Script com validação.'} readOnly></textarea></div></div>}
+};
+return <div className="settings-page-v2">
+ <div className="settings-layout-v2">
+  <div className="card settings-block-v2"><h3>Notificações</h3><p>Esses botões já funcionam nesta tela e ficam salvos neste navegador. Quando conectarmos com o Apps Script/Telegram, eles passam a controlar os alertas reais do bot.</p><div className="settings-list-v2">
+   {notifs.map(n=><div className="settings-item-v2 notification-row-v2" key={n.id}><div className="settings-item-icon">{n.icone}</div><div><div className="settings-item-title">{n.nome}</div><div className="settings-item-desc">{n.desc}</div></div><button className={`toggle-btn ${n.ativo?'on':''}`} onClick={()=>toggle(n.id)} title={n.ativo?'Desativar':'Ativar'}></button></div>)}
+  </div><div className="settings-note-v2" style={{marginTop:14}}>Parcelas encerrando: quando estiver ligado, o sistema deve avisar quando uma compra parcelada estiver na última parcela ou perto de acabar.</div></div>
+  <div className="settings-side-stack">
+   <div className="card settings-block-v2"><h3>Horário dos alertas</h3><p>Define o horário padrão dos avisos automáticos.</p><div className="time-row"><input type="time" value={hora} onChange={e=>saveHora(e.target.value)}/><select value={antecedencia} onChange={e=>saveDias(e.target.value)}><option value="1">1 dia antes</option><option value="2">2 dias antes</option><option value="3">3 dias antes</option><option value="5">5 dias antes</option><option value="7">7 dias antes</option></select></div></div>
+   <div className="card settings-block-v2"><h3>Status</h3><div className="settings-mini-grid"><div className="settings-mini-card"><b>{notifs.filter(n=>n.ativo).length} ativos</b><span>Alertas ligados neste navegador</span></div><div className="settings-mini-card"><b>Telegram</b><span>Envio real entra na integração</span></div></div></div>
+  </div>
+ </div>
+ <div className="card settings-block-v2"><h3>Áreas de configuração</h3><p>Organizei em blocos mais enxutos para não virar cadastro duplicado. O ideal é editar dados específicos na página correspondente e deixar aqui como central de controle.</p><div className="settings-list-v2">{sections.map(s=><div className="settings-item-v2" key={s.t}><div className="settings-item-icon">{s.ic}</div><div><div className="settings-item-title">{s.t}</div><div className="settings-item-desc">{s.d}</div></div><button className="settings-link-btn" onClick={s.action}>{s.btn}</button></div>)}</div></div>
+ {modal&&<div className="edit-modal-backdrop" onClick={()=>{setModal(null);setSaved(false)}}><div className="edit-modal" onClick={e=>e.stopPropagation()}><h3>{modalContent[modal].title}</h3>{modalContent[modal].fields}<div className="settings-feedback">Alterações salvas neste navegador. Depois vamos gravar também no Google Sheets.</div>{saved&&<div className="settings-note-v2" style={{marginTop:10}}>Salvo nesta sessão ✅</div>}<div className="edit-actions"><button className="soft-btn" onClick={()=>{setModal(null);setSaved(false)}}>Fechar</button><button className="form-save" onClick={saveModal}>Salvar nesta sessão</button></div></div></div>}
+</div>}function Sidebar({tela,setTela,onLogout,saldoDisp,menuVersion}){const items=getMenuItems();return <aside className="sidebar"><div className="brand"><span className="brand-mark">💚</span><span className="brand-text">BiFinanças</span></div><nav className="nav">{items.map(i=><button className={`nav-item ${tela===i.id?'on':''}`} onClick={()=>setTela(i.id)} key={i.id}><span className="nav-icon"><IconView value={i.icone} label={i.nome}/></span>{i.nome}</button>)}</nav><div className="side-card"><div className="side-label">Saldo disponível</div><div className="side-value">{brl(saldoDisp)}</div></div><button className="logout" onClick={onLogout}>↪ Sair</button></aside>}
+function MobileTop(){return <div className="mobile-top"><div className="mobile-row"><button>☰</button><div className="mobile-brand">💚 BiFinanças</div><button>🔔</button></div></div>}
+function BottomNav({tela,setTela}){const items=[['inicio','🏠','Início'],['lancamentos','⊞','Lanç.'],['add','+',''],['orcamento','▦','Orçam.'],['config','⋯','Mais']];return <div className="bottom-nav">{items.map(([id,ic,l])=>id==='add'?<button className="bn-item" key={id}><span className="bn-plus">+</span></button>:<button className={`bn-item ${tela===id?'on':''}`} onClick={()=>setTela(id)} key={id}><span className="bn-icon">{ic}</span>{l}</button>)}</div>}
+function MainPage({dados,onLogout}){const[mes,setMes]=useState('2026-05'),[tela,setTela]=useState('inicio'),[menuVersion,setMenuVersion]=useState(0);const saldoDisp=calcMes(dados,mes).saldo;let page=<Inicio dados={dados} mes={mes} setTela={setTela}/>;if(tela==='lancamentos')page=<PageLancamentos dados={dados} mes={mes}/>;if(tela==='orcamento')page=<PageOrcamento dados={dados} mes={mes}/>;if(tela==='metas')page=<PageMetas dados={dados}/>;if(tela==='cartoes')page=<PageCartoes dados={dados} mes={mes}/>;if(tela==='contas')page=<PageContas/>;if(tela==='wishlist')page=<PageWishlist dados={dados}/>;if(tela==='relatorios')page=<PageRelatorios/>;if(tela==='dividas')page=<PageDividas/>;if(tela==='config')page=<PageConfig setTela={setTela} dados={dados} mes={mes} onMenuChange={setMenuVersion}/>;return <div className="app"><Sidebar tela={tela} setTela={setTela} onLogout={onLogout} saldoDisp={saldoDisp} menuVersion={menuVersion}/><MobileTop/><main className="main"><div className="page"><Header mes={mes} setMes={setMes} tela={tela} setTela={setTela} menuVersion={menuVersion}/>{page}</div></main><BottomNav tela={tela} setTela={setTela}/></div>}
+function App(){const[logado,setLogado]=useState(localStorage.getItem('bf-login')==='1');const{dados,loading}=useDados(logado);if(!logado)return <Login ok={()=>{localStorage.setItem('bf-login','1');setLogado(true)}}/>;if(loading||!dados)return <div className="login-wrap"><div className="login-box"><div className="login-logo"><div className="login-ic">💚</div><div className="login-nm">Carregando...</div></div></div></div>;return <MainPage dados={dados} onLogout={()=>{localStorage.removeItem('bf-login');setLogado(false)}}/>}
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
